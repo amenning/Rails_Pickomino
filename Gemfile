@@ -14,6 +14,8 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'angular-rails-templates'
+gem 'font-awesome-rails'
+gem 'twitter-bootstrap-rails'
 
 ruby "2.2.4"
 
