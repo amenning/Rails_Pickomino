@@ -1,0 +1,525 @@
+/* Sticky footer styles
+-------------------------------------------------- */
+/* line 4, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+/* line 8, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+body {
+  /* Margin bottom by footer height */
+  background-color: transparent;
+  margin-bottom: 200px;
+  padding-bottom: 20px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* line 15, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.footer {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  /* Set the fixed height of the footer here */
+  height: 220px;
+  background-color: #333;
+  color: #efefef;
+  padding: 30px 0;
+}
+
+@media only screen and (max-width: 768px) {
+  /* line 26, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+  body {
+    margin-bottom: 400px;
+  }
+
+  /* line 27, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+  .footer {
+    height: 400px;
+  }
+}
+/* line 29, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.footer a {
+  color: #639bcf;
+}
+
+/* line 32, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.footer a:hover {
+  color: #d8e6f3;
+}
+
+/* line 36, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.container {
+  max-width: 960px;
+}
+
+/* line 39, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.well {
+  background-color: transparent;
+}
+
+/* line 42, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.lead {
+  color: #555;
+}
+
+/* line 45, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.btn-lg {
+  padding: 14px 20px;
+  margin-right: 20px;
+}
+
+/* Navigation */
+/* line 52, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.navbar a {
+  color: #d8e6f3;
+}
+
+/* line 55, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.navbar a:hover {
+  color: #fff;
+}
+
+/* line 58, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.nav > li > a:focus,
+.nav > li > a:hover,
+.nav .open > a,
+.nav .open > a:focus,
+.nav .open > a:hover,
+.dropdown-menu > li > a:focus,
+.dropdown-menu > li > a:hover {
+  background-color: #204d74;
+  color: #fff;
+}
+
+/* line 69, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.dropdown-menu > li > a > i {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+/* line 73, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.navbar-toggle .icon-bar {
+  background-color: #d8e6f3;
+}
+
+@media only screen and (max-width: 768px) {
+  /* line 77, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+  .dropdown-menu > li > a {
+    color: #d8e6f3;
+  }
+}
+/* index.html */
+/* line 83, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.features .glyphicon {
+  font-size: 32px;
+}
+
+/* blog.html */
+/* line 88, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.about .fa-rocket {
+  font-size: 64px;
+}
+
+/* line 92, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.posts h1 a {
+  color: #444;
+}
+
+/* line 95, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.meta {
+  margin-bottom: 1em;
+  color: #777;
+}
+
+/* line 99, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.meta li {
+  border-right: 1px solid #ddd;
+}
+
+/* line 102, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.meta li:last-child {
+  border-right: none;
+}
+/* line 1, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.slot > img {
+  margin: 0 !important;
+  height: 71px;
+  width: 50px;
+}
+
+/* line 6, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+img {
+  height: 50px;
+  border-radius: 15px;
+}
+
+/* line 10, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.container-game {
+  background: url(/assets/BackgroundImage-9ecd20ef9675363c591f29351aa96dbfb86b7fc5e963bf92c6d5bac32c5aced9.png) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  /*height: 800px;
+  width: 1600px;
+  height: 100%;
+  width: 100%;
+  margin: 0px auto;
+  border-radius: 4px;
+  */
+}
+
+/* line 24, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.header {
+  border: 2px solid #fff;
+  border-radius: 4px;
+  height: 55px;
+  margin: 14px auto;
+  background-color: #457f86;
+}
+
+/* line 31, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.header h2 {
+  height: 30px;
+  margin: auto;
+}
+
+/* line 35, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.header h2 {
+  font-size: 14px;
+  margin: 0 0;
+  padding: 0;
+  color: #fff;
+  text-align: center;
+}
+
+/* line 42, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.worms {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: #457f86;
+  border-radius: 0px 0px 6px 6px;
+  border-style: solid;
+  border-color: #fff;
+  border-width: 0px 2px 2px 2px;
+  min-height: 100px;
+  padding: 5px;
+}
+
+/* line 54, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.playerWorms {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: #457f86;
+  border-radius: 0px 0px 6px 6px;
+  border-style: solid;
+  border-color: #fff;
+  border-width: 0px 2px 2px 2px;
+  min-height: 100px;
+  padding: 5px;
+}
+
+/* line 66, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.twoPlayerWidth {
+  width: 49%;
+}
+
+/* line 69, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.twoPlayerContainer {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+/* line 74, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.worm {
+  flex: 0 0 auto;
+  background: white;
+  height: 90px;
+  width: 70px;
+  /*margin: 0 auto;*/
+  padding: 0px 0px 0px 0px;
+  border-color: #215f1e;
+  border-style: solid;
+  border-width: 2px 2px 2px 2px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+/* line 87, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.img-center {
+  display: inline;
+  margin: auto;
+}
+
+/* line 91, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.activedice {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: #457f86;
+  border-color: #fff;
+  border-style: solid;
+  border-width: 0px 2px 2px 2px;
+  border-radius: 0px 0px 6px 6px;
+  min-height: 75px;
+}
+
+/* line 102, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.frozendice {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: #457f86;
+  border-color: #fff;
+  border-style: solid;
+  border-width: 0px 2px 2px 2px;
+  border-radius: 0px 0px 6px 6px;
+  min-height: 75px;
+}
+
+/* line 113, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.dice {
+  flex: 0 0 auto;
+  background: white;
+  height: 51px;
+  width: 51px;
+  margin: 8px;
+  border: 8px solid #215f1e;
+  border-radius: 6px;
+  text-align: center;
+}
+
+/* line 123, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.playeroptions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #457f86;
+  border-color: #fff;
+  border-style: solid;
+  border-width: 0px 2px 2px 2px;
+  border-radius: 0px 0px 6px 6px;
+  min-height: 75px;
+}
+
+/* line 134, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.playerNotification {
+  text-align: center;
+  background-color: #457f86;
+  border-radius: 6px;
+  border: 2px solid #fff;
+  color: #fff;
+  font-size: 32px;
+}
+
+/* line 142, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.login {
+  text-align: center;
+  background-color: #457f86;
+  border-radius: 6px;
+  border: 2px solid #fff;
+  color: #fff;
+  font-size: 24px;
+  padding: 20px;
+}
+
+/* line 151, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.login input {
+  color: #000000;
+}
+
+/* line 154, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.login a {
+  color: #FFFFFF;
+}
+
+/* line 157, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.login .loginBtn {
+  color: #FFFFFF;
+  width: 200px;
+}
+
+/* line 161, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.setup {
+  text-align: center;
+  background-color: #457f86;
+  border-radius: 6px;
+  border: 2px solid #fff;
+  color: #fff;
+  font-size: 24px;
+  padding: 20px;
+}
+
+/* line 170, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.setup button {
+  margin: 20px;
+  width: 200px;
+}
+
+/* line 175, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.registration {
+  text-align: center;
+  background-color: #457f86;
+  border-radius: 6px;
+  border: 2px solid #fff;
+  color: #fff;
+  font-size: 24px;
+  padding: 20px;
+}
+
+/* line 184, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.registration input {
+  color: #000;
+}
+
+/* line 187, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.registration input[type="submit"] {
+  margin: 20px;
+  width: 200px;
+  color: #fff;
+}
+
+/* line 193, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.rules {
+  text-align: left;
+  background-color: #457f86;
+  border-radius: 6px;
+  border: 2px solid #fff;
+  color: #fff;
+  font-size: 24px;
+  padding: 20px;
+}
+
+/* line 202, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.buttons {
+  flex: 0 0 auto;
+  height: 35px;
+  width: 100px;
+  margin: 8px;
+  text-align: center;
+  border-radius: 15px;
+}
+
+/* line 210, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.foot {
+  height: 150px;
+  background-color: #457f86;
+  border: 2px solid #fff;
+}
+
+/* line 216, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.logger {
+  color: white;
+  margin: 10px;
+}
+
+/* line 221, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.titles {
+  color: white;
+  margin: 10px;
+}
+
+/* line 225, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.titles-box {
+  text-align: center;
+  background-color: #457f86;
+  border-radius: 6px 6px 0px 0px;
+  border-style: solid;
+  border-color: #fff;
+  border-width: 2px 2px 0px 2px;
+  color: #fff;
+  font-size: 24px;
+}
+
+/* line 236, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.outset {
+  -webkit-box-shadow: 0px 0px 15px -2px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 15px -2px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 15px -2px rgba(0, 0, 0, 0.75);
+}
+
+/* line 242, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.inset {
+  -webkit-box-shadow: inset 0px 0px 15px -2px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: inset 0px 0px 15px -2px rgba(0, 0, 0, 0.75);
+  box-shadow: inset 0px 0px 15px -2px rgba(0, 0, 0, 0.75);
+}
+
+/* line 248, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.activePlayerHighlight {
+  background: #000;
+}
+
+/* line 252, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.activeHighlight {
+  border: 5px solid #78FA89;
+  border-radius: 15px;
+}
+
+/* line 257, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.inactiveHighlight {
+  border: 5px solid #FFF;
+  border-radius: 15px;
+}
+
+/* line 262, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.dead {
+  border: 5px solid #FF0000;
+  border-radius: 15px;
+  position: relative;
+}
+
+/* line 267, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.cross {
+  left: 0;
+  position: absolute;
+  top: -50px;
+  text-align: center;
+  font-size: 125px;
+  color: red;
+}
+
+/* line 276, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.frozenHighlight {
+  border: 5px solid #78FAFE;
+  border-radius: 15px;
+}
+
+/* line 281, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.redText {
+  background-color: #770000;
+  color: #FF0000;
+}
+
+/* line 286, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.activeButtonHighlight {
+  border: 5px solid #78FA89;
+  border-radius: 15px;
+}
+
+/* line 291, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.bunkButtonHighlight {
+  border: 5px solid #FF0000;
+  border-radius: 15px;
+}
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+
+
+
+
+ */
