@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<html lang="en" ng-app="pickominoGame" class='container-game'>
+  <title>Wormdice</title> 
+  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>  
+  <%= csrf_meta_tags %>
+</head>
+<body>
+	<!--?php
+		if(loggedin()){
+			$firstname = getuserfield('firstname');
+			$lastname = getuserfield('lastname');
+			$user_id = getuserfield('id');
+		}else{
+			$user_id = -1;	
+			$firstname = null;
+		}
+	?>		
+	
+	<div ng-controller="LoginController as loginCtrl" ng-init="loginCtrl.setUser('<?php echo $user_id ?>', '<?php echo $firstname ?>')">
+	</div-->
+		
+	<div>
+		<game-header></game-header>
+	
+		<game-body></game-body>
+	
+		<common-footer></common-footer>
+	</div>
+	
+	<script>
+		$(function() {
+			$('.nav-tabs a').click(function (e) {
+				e.preventDefault();
+				$(this).tab('show');
+			});
+		});
+	</script>		
+	
+</body>
+</html>
+

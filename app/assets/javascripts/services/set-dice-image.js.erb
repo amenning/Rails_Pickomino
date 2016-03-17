@@ -1,0 +1,28 @@
+angular.module('pickominoGame')			
+		
+.factory("SetDiceImage", function SetDiceImageFactory(){
+	return {
+		imagify: function(diceValue){
+			switch(diceValue){
+				case 1:
+					return '<%= asset_path('DiceFaceOne.png') %>';
+					break;
+				case 2:
+					return '<%= asset_path('DiceFaceTwo.png') %>';
+					break;
+				case 3:
+					return '<%= asset_path('DiceFaceThree.png') %>';
+					break;
+				case 4:
+					return '<%= asset_path('DiceFaceFour.png') %>';
+					break;
+				case 5:
+					return '<%= asset_path('DiceFaceFive.png') %>';
+					break;
+				case 6:
+					return '<%= asset_path('OneWormTile.png') %>';
+					break;
+			};
+		}
+	};
+});
