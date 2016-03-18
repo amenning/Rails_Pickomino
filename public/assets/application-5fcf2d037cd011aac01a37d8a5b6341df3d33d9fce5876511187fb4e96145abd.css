@@ -1,0 +1,937 @@
+/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+
+/**
+ * 1. Set default font family to sans-serif.
+ * 2. Prevent iOS and IE text size adjust after device orientation change,
+ *    without disabling user zoom.
+ */
+
+
+html {
+  font-family: sans-serif; /* 1 */
+  -ms-text-size-adjust: 100%; /* 2 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+}
+
+/**
+ * Remove default margin.
+ */
+
+body {
+  margin: 0;
+}
+
+/* HTML5 display definitions
+   ========================================================================== */
+
+/**
+ * Correct `block` display not defined for any HTML5 element in IE 8/9.
+ * Correct `block` display not defined for `details` or `summary` in IE 10/11
+ * and Firefox.
+ * Correct `block` display not defined for `main` in IE 11.
+ */
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+  display: block;
+}
+
+/**
+ * 1. Correct `inline-block` display not defined in IE 8/9.
+ * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.
+ */
+
+audio,
+canvas,
+progress,
+video {
+  display: inline-block; /* 1 */
+  vertical-align: baseline; /* 2 */
+}
+
+/**
+ * Prevent modern browsers from displaying `audio` without controls.
+ * Remove excess height in iOS 5 devices.
+ */
+
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+
+/**
+ * Address `[hidden]` styling not present in IE 8/9/10.
+ * Hide the `template` element in IE 8/9/10/11, Safari, and Firefox < 22.
+ */
+
+[hidden],
+template {
+  display: none;
+}
+
+/* Links
+   ========================================================================== */
+
+/**
+ * Remove the gray background color from active links in IE 10.
+ */
+
+a {
+  background-color: transparent;
+}
+
+/**
+ * Improve readability of focused elements when they are also in an
+ * active/hover state.
+ */
+
+a:active,
+a:hover {
+  outline: 0;
+}
+
+/* Text-level semantics
+   ========================================================================== */
+
+/**
+ * Address styling not present in IE 8/9/10/11, Safari, and Chrome.
+ */
+
+abbr[title] {
+  border-bottom: 1px dotted;
+}
+
+/**
+ * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.
+ */
+
+b,
+strong {
+  font-weight: bold;
+}
+
+/**
+ * Address styling not present in Safari and Chrome.
+ */
+
+dfn {
+  font-style: italic;
+}
+
+/**
+ * Address variable `h1` font-size and margin within `section` and `article`
+ * contexts in Firefox 4+, Safari, and Chrome.
+ */
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+/**
+ * Address styling not present in IE 8/9.
+ */
+
+mark {
+  background: #ff0;
+  color: #000;
+}
+
+/**
+ * Address inconsistent and variable font size in all browsers.
+ */
+
+small {
+  font-size: 80%;
+}
+
+/**
+ * Prevent `sub` and `sup` affecting `line-height` in all browsers.
+ */
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sup {
+  top: -0.5em;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+/* Embedded content
+   ========================================================================== */
+
+/**
+ * Remove border when inside `a` element in IE 8/9/10.
+ */
+
+img {
+  border: 0;
+}
+
+/**
+ * Correct overflow not hidden in IE 9/10/11.
+ */
+
+svg:not(:root) {
+  overflow: hidden;
+}
+
+/* Grouping content
+   ========================================================================== */
+
+/**
+ * Address margin not present in IE 8/9 and Safari.
+ */
+
+figure {
+  margin: 1em 40px;
+}
+
+/**
+ * Address differences between Firefox and other browsers.
+ */
+
+hr {
+  box-sizing: content-box;
+  height: 0;
+}
+
+/**
+ * Contain overflow in all browsers.
+ */
+
+pre {
+  overflow: auto;
+}
+
+/**
+ * Address odd `em`-unit font size rendering in all browsers.
+ */
+
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+/* Forms
+   ========================================================================== */
+
+/**
+ * Known limitation: by default, Chrome and Safari on OS X allow very limited
+ * styling of `select`, unless a `border` property is set.
+ */
+
+/**
+ * 1. Correct color not being inherited.
+ *    Known issue: affects color of disabled elements.
+ * 2. Correct font properties not being inherited.
+ * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.
+ */
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  color: inherit; /* 1 */
+  font: inherit; /* 2 */
+  margin: 0; /* 3 */
+}
+
+/**
+ * Address `overflow` set to `hidden` in IE 8/9/10/11.
+ */
+
+button {
+  overflow: visible;
+}
+
+/**
+ * Address inconsistent `text-transform` inheritance for `button` and `select`.
+ * All other form control elements do not inherit `text-transform` values.
+ * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.
+ * Correct `select` style inheritance in Firefox.
+ */
+
+button,
+select {
+  text-transform: none;
+}
+
+/**
+ * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
+ *    and `video` controls.
+ * 2. Correct inability to style clickable `input` types in iOS.
+ * 3. Improve usability and consistency of cursor style between image-type
+ *    `input` and others.
+ */
+
+button,
+html input[type="button"], /* 1 */
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button; /* 2 */
+  cursor: pointer; /* 3 */
+}
+
+/**
+ * Re-set default cursor for disabled elements.
+ */
+
+button[disabled],
+html input[disabled] {
+  cursor: default;
+}
+
+/**
+ * Remove inner padding and border in Firefox 4+.
+ */
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+/**
+ * Address Firefox 4+ setting `line-height` on `input` using `!important` in
+ * the UA stylesheet.
+ */
+
+input {
+  line-height: normal;
+}
+
+/**
+ * It's recommended that you don't attempt to style these elements.
+ * Firefox's implementation doesn't respect box-sizing, padding, or width.
+ *
+ * 1. Address box sizing set to `content-box` in IE 8/9/10.
+ * 2. Remove excess padding in IE 8/9/10.
+ */
+
+input[type="checkbox"],
+input[type="radio"] {
+  box-sizing: border-box; /* 1 */
+  padding: 0; /* 2 */
+}
+
+/**
+ * Fix the cursor style for Chrome's increment/decrement buttons. For certain
+ * `font-size` values of the `input`, it causes the cursor style of the
+ * decrement button to change from `default` to `text`.
+ */
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/**
+ * 1. Address `appearance` set to `searchfield` in Safari and Chrome.
+ * 2. Address `box-sizing` set to `border-box` in Safari and Chrome.
+ */
+
+input[type="search"] {
+  -webkit-appearance: textfield; /* 1 */
+  box-sizing: content-box; /* 2 */
+}
+
+/**
+ * Remove inner padding and search cancel button in Safari and Chrome on OS X.
+ * Safari (but not Chrome) clips the cancel button when the search input has
+ * padding (and `textfield` appearance).
+ */
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/**
+ * Define consistent border, margin, and padding.
+ */
+
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+
+/**
+ * 1. Correct `color` not being inherited in IE 8/9/10/11.
+ * 2. Remove padding so people aren't caught out if they zero out fieldsets.
+ */
+
+legend {
+  border: 0; /* 1 */
+  padding: 0; /* 2 */
+}
+
+/**
+ * Remove default vertical scrollbar in IE 8/9/10/11.
+ */
+
+textarea {
+  overflow: auto;
+}
+
+/**
+ * Don't inherit the `font-weight` (applied by a rule above).
+ * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.
+ */
+
+optgroup {
+  font-weight: bold;
+}
+
+/* Tables
+   ========================================================================== */
+
+/**
+ * Remove most spacing between table cells.
+ */
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+td,
+th {
+  padding: 0;
+}
+/* Sticky footer styles
+-------------------------------------------------- */
+/* line 4, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+/* line 8, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+body {
+  /* Margin bottom by footer height */
+  background-color: transparent;
+  margin-bottom: 200px;
+  padding-bottom: 20px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* line 15, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.footer {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  /* Set the fixed height of the footer here */
+  height: 220px;
+  background-color: #333;
+  color: #efefef;
+  padding: 30px 0;
+}
+
+@media only screen and (max-width: 768px) {
+  /* line 26, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+  body {
+    margin-bottom: 400px;
+  }
+
+  /* line 27, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+  .footer {
+    height: 400px;
+  }
+}
+/* line 29, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.footer a {
+  color: #639bcf;
+}
+
+/* line 32, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.footer a:hover {
+  color: #d8e6f3;
+}
+
+/* line 36, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.container {
+  max-width: 960px;
+}
+
+/* line 39, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.well {
+  background-color: transparent;
+}
+
+/* line 42, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.lead {
+  color: #555;
+}
+
+/* line 45, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.btn-lg {
+  padding: 14px 20px;
+  margin-right: 20px;
+}
+
+/* Navigation */
+/* line 52, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.navbar a {
+  color: #d8e6f3;
+}
+
+/* line 55, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.navbar a:hover {
+  color: #fff;
+}
+
+/* line 58, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.nav > li > a:focus,
+.nav > li > a:hover,
+.nav .open > a,
+.nav .open > a:focus,
+.nav .open > a:hover,
+.dropdown-menu > li > a:focus,
+.dropdown-menu > li > a:hover {
+  background-color: #204d74;
+  color: #fff;
+}
+
+/* line 69, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.dropdown-menu > li > a > i {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+/* line 73, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.navbar-toggle .icon-bar {
+  background-color: #d8e6f3;
+}
+
+@media only screen and (max-width: 768px) {
+  /* line 77, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+  .dropdown-menu > li > a {
+    color: #d8e6f3;
+  }
+}
+/* index.html */
+/* line 83, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.features .glyphicon {
+  font-size: 32px;
+}
+
+/* blog.html */
+/* line 88, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.about .fa-rocket {
+  font-size: 64px;
+}
+
+/* line 92, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.posts h1 a {
+  color: #444;
+}
+
+/* line 95, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.meta {
+  margin-bottom: 1em;
+  color: #777;
+}
+
+/* line 99, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.meta li {
+  border-right: 1px solid #ddd;
+}
+
+/* line 102, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/main.css.scss */
+.meta li:last-child {
+  border-right: none;
+}
+/* line 1, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+img {
+  height: 50px;
+  border-radius: 15px;
+}
+
+/* line 5, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.container-game {
+  background: url(/assets/BackgroundImage-9ecd20ef9675363c591f29351aa96dbfb86b7fc5e963bf92c6d5bac32c5aced9.png) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+/* line 12, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.header {
+  border: 2px solid #fff;
+  border-radius: 4px;
+  height: 55px;
+  margin: 14px auto;
+  background-color: #457f86;
+}
+
+/* line 19, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.header h2 {
+  height: 30px;
+  margin: auto;
+}
+
+/* line 23, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.header h2 {
+  font-size: 14px;
+  margin: 0 0;
+  padding: 0;
+  color: #fff;
+  text-align: center;
+}
+
+/* line 30, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.worms {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: #457f86;
+  border-radius: 0px 0px 6px 6px;
+  border-style: solid;
+  border-color: #fff;
+  border-width: 0px 2px 2px 2px;
+  min-height: 100px;
+  padding: 5px;
+}
+
+/* line 42, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.playerWorms {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: #457f86;
+  border-radius: 0px 0px 6px 6px;
+  border-style: solid;
+  border-color: #fff;
+  border-width: 0px 2px 2px 2px;
+  min-height: 100px;
+  padding: 5px;
+}
+
+/* line 54, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.twoPlayerWidth {
+  width: 49%;
+}
+
+/* line 57, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.twoPlayerContainer {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+/* line 62, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.worm {
+  flex: 0 0 auto;
+  background: white;
+  height: 90px;
+  width: 70px;
+  /*margin: 0 auto;*/
+  padding: 0px 0px 0px 0px;
+  border-color: #215f1e;
+  border-style: solid;
+  border-width: 2px 2px 2px 2px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+/* line 75, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.img-center {
+  display: inline;
+  margin: auto;
+}
+
+/* line 79, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.activedice {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: #457f86;
+  border-color: #fff;
+  border-style: solid;
+  border-width: 0px 2px 2px 2px;
+  border-radius: 0px 0px 6px 6px;
+  min-height: 75px;
+}
+
+/* line 90, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.frozendice {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: #457f86;
+  border-color: #fff;
+  border-style: solid;
+  border-width: 0px 2px 2px 2px;
+  border-radius: 0px 0px 6px 6px;
+  min-height: 75px;
+}
+
+/* line 101, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.dice {
+  flex: 0 0 auto;
+  background: white;
+  height: 51px;
+  width: 51px;
+  margin: 8px;
+  border: 8px solid #215f1e;
+  border-radius: 6px;
+  text-align: center;
+}
+
+/* line 111, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.playeroptions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #457f86;
+  border-color: #fff;
+  border-style: solid;
+  border-width: 0px 2px 2px 2px;
+  border-radius: 0px 0px 6px 6px;
+  min-height: 75px;
+}
+
+/* line 122, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.playerNotification {
+  text-align: center;
+  background-color: #457f86;
+  color: #fff;
+  border-radius: 6px;
+  border: 2px solid #fff;
+  font-size: 32px;
+}
+
+/* line 130, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.login {
+  text-align: center;
+  background-color: #457f86;
+  color: #fff;
+  font-size: 24px;
+  border-radius: 6px;
+  border: 2px solid #fff;
+  padding: 20px;
+}
+
+/* line 139, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.login input {
+  color: #000000;
+}
+
+/* line 142, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.login a {
+  color: #FFFFFF;
+}
+
+/* line 145, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.login .loginBtn {
+  color: #FFFFFF;
+  width: 200px;
+}
+
+/* line 149, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.setup {
+  text-align: center;
+  background-color: #457f86;
+  color: #fff;
+  border-radius: 6px;
+  border: 2px solid #fff;
+  font-size: 24px;
+  padding: 20px;
+}
+
+/* line 158, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.setup button {
+  margin: 20px;
+  width: 200px;
+}
+
+/* line 163, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.registration {
+  text-align: center;
+  background-color: #457f86;
+  border-radius: 6px;
+  border: 2px solid #fff;
+  color: #fff;
+  font-size: 24px;
+  padding: 20px;
+}
+
+/* line 172, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.registration input {
+  color: #000;
+}
+
+/* line 175, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.registration input[type="submit"] {
+  margin: 20px;
+  width: 200px;
+  color: #fff;
+}
+
+/* line 181, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.rules {
+  text-align: left;
+  background-color: #457f86;
+  border-radius: 6px;
+  border: 2px solid #fff;
+  color: #fff;
+  font-size: 24px;
+  padding: 20px;
+}
+
+/* line 190, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.buttons {
+  flex: 0 0 auto;
+  height: 35px;
+  min-width: 100px;
+  margin: 8px;
+  text-align: center;
+  border-radius: 15px;
+}
+
+/* line 198, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.foot {
+  height: 150px;
+  background-color: #457f86;
+  border: 2px solid #fff;
+}
+
+/* line 204, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.logger {
+  color: white;
+  margin: 10px;
+}
+
+/* line 209, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.titles {
+  color: white;
+  margin: 10px;
+}
+
+/* line 213, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.titles-box {
+  text-align: center;
+  background-color: #457f86;
+  border-radius: 6px 6px 0px 0px;
+  border-style: solid;
+  border-color: #fff;
+  border-width: 2px 2px 0px 2px;
+  color: #fff;
+  font-size: 24px;
+}
+
+/* line 224, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.outset {
+  -webkit-box-shadow: 0px 0px 15px -2px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 15px -2px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 15px -2px rgba(0, 0, 0, 0.75);
+}
+
+/* line 230, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.inset {
+  -webkit-box-shadow: inset 0px 0px 15px -2px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: inset 0px 0px 15px -2px rgba(0, 0, 0, 0.75);
+  box-shadow: inset 0px 0px 15px -2px rgba(0, 0, 0, 0.75);
+}
+
+/* line 236, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.activePlayerHighlight {
+  background: #000;
+}
+
+/* line 240, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.activeHighlight {
+  border: 5px solid #78FA89;
+  border-radius: 15px;
+}
+
+/* line 245, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.inactiveHighlight {
+  border: 5px solid #FFF;
+  border-radius: 15px;
+}
+
+/* line 250, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.dead {
+  border: 5px solid #FF0000;
+  border-radius: 15px;
+  position: relative;
+}
+
+/* line 255, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.cross {
+  left: 0;
+  position: absolute;
+  top: -50px;
+  text-align: center;
+  font-size: 125px;
+  color: red;
+}
+
+/* line 264, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.frozenHighlight {
+  border: 5px solid #78FAFE;
+  border-radius: 15px;
+}
+
+/* line 269, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.redText {
+  background-color: #770000;
+  color: #FF0000;
+}
+
+/* line 274, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.activeButtonHighlight {
+  border: 5px solid #78FA89;
+  border-radius: 15px;
+}
+
+/* line 279, C:/Users/Andrew/Documents/PickomnioAngularRails/RailsApp/wormdice/app/assets/stylesheets/board.css.scss */
+.bunkButtonHighlight {
+  border: 5px solid #FF0000;
+  border-radius: 15px;
+}
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+
+
+
+
+
+ */
