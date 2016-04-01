@@ -19,11 +19,9 @@ angular.module('pickominoGame')
 					email: $scope.email
 					};
 			
-				console.log(data);
+				//console.log(data);
 				//GameAction.setStatus('userID', userID);
 				Registration.newUser(data);
-				GameAction.setStatus('gameRegistration', false);
-				GameAction.setStatus('gameSetup', true);
 			}else{
 				console.log('Password do not match');
 			}
