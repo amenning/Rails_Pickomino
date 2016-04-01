@@ -6,6 +6,12 @@ Rails.application.routes.draw do
   # root 'welcome#index'
 
   root to: 'application#angular'
+  
+  resources :users, only: [:create, :index] do
+    resources :games, only: [:create, :index] do
+     resources :game_states, only: [:create, :index] 
+    end
+  end
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
