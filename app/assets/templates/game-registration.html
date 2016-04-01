@@ -1,31 +1,31 @@
-<div class = "registration inset">
-		<form action="app/assets/php/registration.php" method="POST">
+<div class = "registration inset" ng-controller="RegistrationController as regisCtrl">
+		<form ng-submit='regisCtrl.newUser()'>
 			<h3>Welcome to Pickomino!<br>  
 			Please register below.</h3>
 			<table style="margin: auto;">
 				<tr>
 					<td>First Name:</td> 
-					<td><input type="text" name="firstname" required/></td>
+					<td><input type="text" ng-model="firstname" required/></td>
 				</tr>
 				<tr>
 					<td>Last Name:</td> 
-					<td><input type="text" name="lastname" required/></td>
+					<td><input type="text" ng-model="lastname" required/></td>
 				</tr>
 				<tr>
 					<td>Username:</td>
-					<td><input type="text" name="username" required/></td>
+					<td><input type="text" ng-model="username" required/></td>
 				</tr>
 				<tr>
 					<td>Password:</td>
-					<td><input type="password" name="password" required/></td>
+					<td><input type="password" ng-model="password" required/></td>
 				</tr>
 				<tr>
 					<td>Confirm Password:</td>
-					<td><input type="password" name="password_check" required/></td>
+					<td><input type="password" ng-model="password_check" required/></td>
 				</tr>
 				<tr>
 					<td>Email:</td>
-					<td><input type="text" name="email" required/></td>
+					<td><input type="text" ng-model="email" required/></td>
 				</tr>
 			</table>
 			<br>

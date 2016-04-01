@@ -7,9 +7,9 @@ Rails.application.routes.draw do
 
   root to: 'application#angular'
   
-  resources :users, only: [:create, :index] do
-    resources :games, only: [:create, :index] do
-     resources :game_states, only: [:create, :index] 
+  resources :users, only: [:create, :show] do
+    resources :games, only: [:create, :show] do
+     resources :game_states, only: [:create, :show] 
     end
   end
 

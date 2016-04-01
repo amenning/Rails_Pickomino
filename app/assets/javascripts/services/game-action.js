@@ -10,8 +10,8 @@ angular.module('pickominoGame')
 	
 		var gameActionStatus = {
 			gameLogin: false,
-			gameRegistration: false,
-			gameSetup: true,
+			gameRegistration: true,
+			gameSetup: false,
 			gameActive: false,
 			tutorial: false,
 			playerSetup: false,
