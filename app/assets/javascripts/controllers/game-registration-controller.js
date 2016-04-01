@@ -3,15 +3,30 @@ angular.module('pickominoGame')
 .controller("RegistrationController", [
 	'GameAction',
 	'GameState',
+	'Registration',
 	'$http',
 	'$scope',
-	function(GameAction, GameState, $http, $scope){
-		this.gameStatus = GameAction.status;
-		
-		this.newUser = function(userID){
-			GameAction.setStatus('userID', userID);
-			GameAction.setStatus('gameRegistration', false);
-			GameAction.setStatus('gameSetup', true);
+	function(GameAction, GameState, Registration, $http, $scope){
+				
+		this.newUser = function(){
+			
+			if($scope.password === $scope.password_check){
+				data = {
+					firstname: $scope.firstname,
+					lastname: $scope.lastname,
+					username: $scope.username,
+					password: $scope.password,
+					email: $scope.email
+					};
+			
+				console.log(data);
+				//GameAction.setStatus('userID', userID);
+				Registration.newUser(data);
+				GameAction.setStatus('gameRegistration', false);
+				GameAction.setStatus('gameSetup', true);
+			}else{
+				console.log('Password do not match');
+			}
 		};
 	}
 ]);	
