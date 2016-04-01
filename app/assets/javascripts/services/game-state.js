@@ -27,14 +27,12 @@ angular.module('pickominoGame')
 		return {	
 			newGame: function(){
 				userID = GameAction.status.userID;
-				config = {
+				data = {
 					game: {player_1_id: GameAction.status.userID}
 				};
 				
-				return $http.post('/users/' + userID + '/games.json', config).success(function(data){
-					console.log(data.id);
-					gameState.gameID = data.id;
-					console.log(gameState);
+				return $http.post('/users/' + userID + '/games.json', data).success(function(response){
+					gameState.gameID = response.id;
 				});
 			},
 			
