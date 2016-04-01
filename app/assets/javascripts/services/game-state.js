@@ -8,7 +8,7 @@ angular.module('pickominoGame')
 	'PlayerNotification',
 	'PlayerWormsArray',
 	'$http',
-	function SaveGameStateFactory(FrozenDiceArray, ActiveDiceArray, GrillWormsArray, GameAction, PlayerNotification, PlayerWormsArray, $http){
+	function GameStateFactory(FrozenDiceArray, ActiveDiceArray, GrillWormsArray, GameAction, PlayerNotification, PlayerWormsArray, $http){
 	
 		var gameState = { 
 							gameID: null,
@@ -26,9 +26,9 @@ angular.module('pickominoGame')
 		
 		return {
 			newGame: function(){
+				/*
 				data = {userID: gameState.gameStatus.userID};
 				
-				/* 
 				return $http.post("app/assets/php/new_game.php", data)
 					.success(function(data){
 						gameState.gameID = data;
@@ -46,10 +46,10 @@ angular.module('pickominoGame')
 			},
 			
 			loadGame: function(){
+				/*
 				data = {userID: gameState.gameStatus.userID};
 				gameStateScope = this;
 				
-				/*
 				return $http.post("app/assets/php/load_game.php", data)
 					.success(function(data){
 						if(data!=false){
@@ -61,9 +61,9 @@ angular.module('pickominoGame')
 			},
 			
 			loadGameState: function(){
+				/*
 				data = {gameID: gameState.gameID};
 				
-				/*
 				return $http.post("app/assets/php/load_game_state.php", data)
 					.success(function(data){
 						if(data!=false){

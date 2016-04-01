@@ -8,6 +8,11 @@ angular.module('pickominoGame')
 		
 		this.setGame = function(type){
 			switch(type){
+				case "tutorial":
+					GameAction.setStatus('tutorial', true);
+					GameAction.setStatus('gameSetup', false);
+					GameAction.setStatus('playerSetup', true);
+					break;
 				case "continue":
 					GameState.loadGame();
 					break;
@@ -15,6 +20,8 @@ angular.module('pickominoGame')
 					GameState.newGame();
 					GameAction.setStatus('roll', true);
 					GameAction.setStatus('gameSetup', false);
+					GameAction.setStatus('playerSetup', true);
+					GameAction.setStatus('gameActive', true);
 					break;
 			};
 		};
