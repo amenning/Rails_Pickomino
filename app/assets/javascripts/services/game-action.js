@@ -9,8 +9,8 @@ angular.module('pickominoGame')
 	function GameActionFactory(FrozenDiceArray, ActiveDiceArray, GrillWormsArray, CheckValidDiceFreeze, CheckValidWormTake){
 	
 		var gameActionStatus = {
-			gameLogin: false,
-			gameRegistration: true,
+			gameLogin: true,
+			gameRegistration: false,
 			gameSetup: false,
 			gameActive: false,
 			tutorial: false,

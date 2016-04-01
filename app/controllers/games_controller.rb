@@ -1,7 +1,7 @@
 class GamesController < ApplicationController
 
   def create
-    respond_with Game.create(game_params)
+    respond_with Game.create(game_params), location: nil   
   end
 
   def show
@@ -10,10 +10,6 @@ class GamesController < ApplicationController
 
   private
   def game_params
-    params.require(:game).permit(
-      :player_1_id, 
-      :player_2_id, 
-      :created_at
-      )
+    params.require(:game).permit(:player_1_id)
   end
 end

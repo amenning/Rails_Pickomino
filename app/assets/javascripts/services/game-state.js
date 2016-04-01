@@ -24,16 +24,18 @@ angular.module('pickominoGame')
 						    playerWormsTotals: PlayerWormsArray.status
 		   				};
 		
-		return {
+		return {	
 			newGame: function(){
-				/*
-				data = {userID: gameState.gameStatus.userID};
+				userID = GameAction.status.userID;
+				config = {
+					game: {player_1_id: GameAction.status.userID}
+				};
 				
-				return $http.post("app/assets/php/new_game.php", data)
-					.success(function(data){
-						gameState.gameID = data;
-					});
-				*/
+				return $http.post('/users/' + userID + '/games.json', config).success(function(data){
+					console.log(data.id);
+					gameState.gameID = data.id;
+					console.log(gameState);
+				});
 			},
 			
 			save: function(){				
