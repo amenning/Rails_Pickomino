@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   
   resources :users, only: [:create, :show] do
     collection do
-      get :login
+      post :login
     end
     resources :games, only: [:create, :show] do
      resources :game_states, only: [:create, :show] 

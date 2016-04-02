@@ -9,6 +9,7 @@ angular.module('pickominoGame')
 		this.gameStatus = GameAction.status;
 		$scope.message = '';
 		this.formData = {};
+		context = this;
 		
 		this.setUser = function(userID, firstname){
 			if(userID >= 0){
@@ -25,6 +26,19 @@ angular.module('pickominoGame')
 		};
 		
 		this.processForm = function(){
+			 data = { user: {
+			 	username: this.formData.username,
+			 	password: this.formData.password
+			 }};
+			 
+			 $http.post('/users/login.json', data)
+			 .success(function(response){
+			 	console.log(response);
+			 	if(response !== null){
+			 		context.setUser(response.id, response.firstname);
+			 	}
+			 });
+			 /*
 			 $http({
   				method  : 'POST',
   				url     : 'app/assets/php/loginform.inc.php',
@@ -41,6 +55,7 @@ angular.module('pickominoGame')
 					$scope.message = data.errors.message;
 				}
   			});
+  			*/
 		};
 		
 		this.guestLogin = function(){
