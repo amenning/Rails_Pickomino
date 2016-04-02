@@ -10,6 +10,8 @@ class UsersController < ApplicationController
   
   def login
     @user = User.where(login_params).last
+    session[:user_id]=@user[:id]
+    session[:firstname]=@user[:firstname]
     respond_with @user.to_json, location: nil
   end
   
@@ -20,14 +22,12 @@ class UsersController < ApplicationController
       game_state = GameState.where({gameID: game[:id]}).last
     
       respond_with game_state.to_json, location: nil
-    
-      #respond_with user.to_json, location: nil
     else
       respond_with nil, location: nil
     end
   end
   
-  private
+  private  
   def user_params
     params.require(:user).permit(:username, :password, :firstname, :lastname, :email)
   end

@@ -9,20 +9,10 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-	<!--?php
-		if(loggedin()){
-			$firstname = getuserfield('firstname');
-			$lastname = getuserfield('lastname');
-			$user_id = getuserfield('id');
-		}else{
-			$user_id = -1;	
-			$firstname = null;
-		}
-	?>		
-	
-	<div ng-controller="LoginController as loginCtrl" ng-init="loginCtrl.setUser('<?php echo $user_id ?>', '<?php echo $firstname ?>')">
-	</div-->
-		
+	<% if session[:user_id] %>
+		<div ng-controller="LoginController as loginCtrl" ng-init="loginCtrl.setUser(<%=session[:user_id] %>, '<%=session[:firstname]%>')"></div>
+	<% end %>
+
 	<div>
 		<game-header></game-header>
 	
