@@ -15,22 +15,13 @@ class UsersController < ApplicationController
   
   def continue_game
     logger.info "test"
-    @user = User.where(login_params).last
-    game = Game.where({player_1_id: user[:id]}).last
+    logger.info continue_params
+    game = Game.where(continue_params).last
     game_state = GameState.where({gameID: game[:id]}).last
-    logger.info user.to_json
     logger.info game.to_json
     logger.info game_state.to_json
     
-    respond_with do |format|
-      format.json {
-        render :json => {
-          :user => user,
-          :game => game,
-          :game_state => game_state
-        }
-      }
-    end
+    respond_with game_state.to_json, location: nil
     
     #respond_with user.to_json, location: nil
   end
@@ -42,6 +33,10 @@ class UsersController < ApplicationController
   
   def login_params
     params.require(:user).permit(:username, :password)
+  end
+  
+  def continue_params
+    params.require(:user).permit(:player_1_id)
   end
 
 end
