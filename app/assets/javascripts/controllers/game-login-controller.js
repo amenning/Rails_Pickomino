@@ -44,22 +44,22 @@ angular.module('pickominoGame')
 		};
 		
 		this.guestLogin = function(){
-			var randomPassword = "Guest" + Math.floor((Math.random() * 99999) + 1);
+			var randomPassword = "Guest" + Math.floor((Math.random() * 99999) + 1) + Date.now();
 			newGuest = {
-				'firstname': "Guest",
-				'lastname': "",
-				'username': "Guest" + Math.floor((Math.random() * 99999) + 1),
-				'password': randomPassword,
-				'password_check': randomPassword,
-				'email': 'guest@guest.com'					
+				firstname: "Guest",
+				lastname: "",
+				username: "Guest" + Math.floor((Math.random() * 99999) + 1) + Date.now(),
+				password: randomPassword,
+				email: 'guest@guest.com'					
 			};
-							
-			$http.post("app/assets/php/guest_registration.php", newGuest)
-			.success(function(data){
+			
+			$http.post('/users.json', newGuest)
+			.success(function(response){
+				console.log(response);
 				GameAction.setStatus('gameLogin', false);
 				GameAction.setStatus('gameSetup', true);
-				GameAction.setStatus('firstname', data.firstname);
-				GameAction.setStatus('userID', data.user_id);
+				GameAction.setStatus('firstname', 'Guest');
+				GameAction.setStatus('userID', response.id);
 			});
 		};
 	}
