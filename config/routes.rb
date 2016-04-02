@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     collection do
       post :login
       post :continue_game
+      post :logout
     end
     resources :games, only: [:create, :show] do
      resources :game_states, only: [:create, :show] 

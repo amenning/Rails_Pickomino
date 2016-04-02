@@ -15,6 +15,11 @@ class UsersController < ApplicationController
     respond_with @user.to_json, location: nil
   end
   
+  def logout
+    reset_session
+    respond_with nil, location:nil
+  end
+  
   def continue_game
     game = Game.where(continue_params).last
 
