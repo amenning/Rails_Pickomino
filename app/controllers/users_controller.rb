@@ -14,16 +14,17 @@ class UsersController < ApplicationController
   end
   
   def continue_game
-    logger.info "test"
-    logger.info continue_params
     game = Game.where(continue_params).last
-    game_state = GameState.where({gameID: game[:id]}).last
-    logger.info game.to_json
-    logger.info game_state.to_json
+
+    if !game.nil?
+      game_state = GameState.where({gameID: game[:id]}).last
     
-    respond_with game_state.to_json, location: nil
+      respond_with game_state.to_json, location: nil
     
-    #respond_with user.to_json, location: nil
+      #respond_with user.to_json, location: nil
+    else
+      respond_with nil, location: nil
+    end
   end
   
   private

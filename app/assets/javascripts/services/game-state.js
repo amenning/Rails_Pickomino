@@ -67,8 +67,6 @@ angular.module('pickominoGame')
 	    						response[key] = JSON.parse(response[key]);
 	    					} catch (error) {
 	 						   // Handle the error
-	 						   	console.log(key);
-	 						   	console.log(response[key]);
 	    						console.log(error.message);
 							}
 						}
