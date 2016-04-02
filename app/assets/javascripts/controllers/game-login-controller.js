@@ -33,29 +33,12 @@ angular.module('pickominoGame')
 			 
 			 $http.post('/users/login.json', data)
 			 .success(function(response){
-			 	console.log(response);
 			 	if(response !== null){
 			 		context.setUser(response.id, response.firstname);
+			 	}else{
+			 		$scope.message = 'Invalid Username/Password';
 			 	}
 			 });
-			 /*
-			 $http({
-  				method  : 'POST',
-  				url     : 'app/assets/php/loginform.inc.php',
-  				data    : $.param(this.formData),  // pass in data as strings
-  				headers : { 'Content-Type': 'application/x-www-form-urlencoded' }  // set the headers so angular passing info as form data (not request payload)
- 			})
-  			.success(function(data) {
-				if(data.success===true){
-					GameAction.setStatus('userID', data.userID);
-					GameAction.setStatus('gameLogin', false);
-					GameAction.setStatus('gameSetup', true);
-					GameAction.setStatus('firstname', data.firstname);
-				}else{
-					$scope.message = data.errors.message;
-				}
-  			});
-  			*/
 		};
 		
 		this.guestLogin = function(){
