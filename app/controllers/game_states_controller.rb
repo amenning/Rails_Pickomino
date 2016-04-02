@@ -1,11 +1,11 @@
 class GameStatesController < ApplicationController
 
   def create
-    respond_with GameState.create(game_state_params)
+    respond_with GameState.create(game_state_params), location: nil
   end
 
   def show
-    respond_with GameState.find(params[:gameID])
+    respond_with GameState.find(params[:gameID]), location: nil
   end
 
   private
@@ -21,7 +21,6 @@ class GameStatesController < ApplicationController
       :playerWorms,
       :playerWormsTotals,
       :gameID,
-      :created_at
     )
   end
   

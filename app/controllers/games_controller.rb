@@ -5,7 +5,7 @@ class GamesController < ApplicationController
   end
 
   def show
-    respond_with Game.find(params[:player_1_id])
+    respond_with Game.find(params[:player_1_id]), location: nil
   end
 
   private

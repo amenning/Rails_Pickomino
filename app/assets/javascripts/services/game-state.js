@@ -10,9 +10,10 @@ angular.module('pickominoGame')
 	'$http',
 	function GameStateFactory(FrozenDiceArray, ActiveDiceArray, GrillWormsArray, GameAction, PlayerNotification, PlayerWormsArray, $http){
 	
+		var gameStateID = null;
+		
 		var gameState = { 
 							gameID: null,
-							gameStateID: null,
 							gameStatus: GameAction.status,
 							grillWorms: GrillWormsArray.array,
 							deadGrillWorms: GrillWormsArray.deadArray,
@@ -43,6 +44,14 @@ angular.module('pickominoGame')
 						gameState.gameStateID = data;
 					});
 				*/
+				userID = GameAction.status.userID;
+				data = {
+					game_state: gameState
+				};
+				
+				return $http.post('/users/' + userID + '/games/' + gameState.gameID + '/game_states.json', data).success(function(response){
+					gameStateID = response.id;
+				});
 			},
 			
 			loadGame: function(){
