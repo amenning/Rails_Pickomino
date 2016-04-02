@@ -8,6 +8,10 @@ class UsersController < ApplicationController
     respond_with User.find(params[:username, :password]), location: nil
   end
   
+  def login
+    
+  end
+  
   private
   def user_params
     params.require(:user).permit(:username, :password, :firstname, :lastname, :email)

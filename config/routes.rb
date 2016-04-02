@@ -8,10 +8,14 @@ Rails.application.routes.draw do
   root to: 'application#angular'
   
   resources :users, only: [:create, :show] do
+    collection do
+      get :login
+    end
     resources :games, only: [:create, :show] do
      resources :game_states, only: [:create, :show] 
     end
   end
+  
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
