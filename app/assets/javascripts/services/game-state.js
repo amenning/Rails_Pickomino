@@ -14,15 +14,15 @@ angular.module('pickominoGame')
 		
 		var gameState = { 
 							gameID: null,
-							gameStatus: GameAction.status,
-							grillWorms: GrillWormsArray.array,
-							deadGrillWorms: GrillWormsArray.deadArray,
-							playerMessage: PlayerNotification.message,
-						    activeDice: ActiveDiceArray.array,
-						    frozenDice: FrozenDiceArray.array,
-						    frozenDiceTotal: FrozenDiceArray.frozenStatus,
-						    playerWorms: PlayerWormsArray.array,
-						    playerWormsTotals: PlayerWormsArray.status
+							gameStatus: JSON.stringify(GameAction.status),
+							grillWorms: JSON.stringify(GrillWormsArray.array),
+							deadGrillWorms: JSON.stringify(GrillWormsArray.deadArray),
+							playerMessage: JSON.stringify(PlayerNotification.message),
+						    activeDice: JSON.stringify(ActiveDiceArray.array),
+						    frozenDice: JSON.stringify(FrozenDiceArray.array),
+						    frozenDiceTotal: JSON.stringify(FrozenDiceArray.frozenStatus),
+						    playerWorms: JSON.stringify(PlayerWormsArray.array),
+						    playerWormsTotals: JSON.stringify(PlayerWormsArray.status)
 		   				};
 		
 		return {	
@@ -38,12 +38,6 @@ angular.module('pickominoGame')
 			},
 			
 			save: function(){				
-				/*
-				return $http.post("app/assets/php/game_state.php", gameState)
-					.success(function(data){
-						gameState.gameStateID = data;
-					});
-				*/
 				userID = GameAction.status.userID;
 				data = {
 					game_state: gameState
@@ -55,6 +49,12 @@ angular.module('pickominoGame')
 			},
 			
 			loadGame: function(){
+				userID = GameAction.status.userID;
+				
+				return $http.get('/users/' + userID + '.json').success(function(response){
+					gameState.gameID = response.id;
+				});
+				
 				/*
 				data = {userID: gameState.gameStatus.userID};
 				gameStateScope = this;
