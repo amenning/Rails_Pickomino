@@ -55,7 +55,6 @@ angular.module('pickominoGame')
 			
 			$http.post('/users.json', newGuest)
 			.success(function(response){
-				console.log(response);
 				GameAction.setStatus('gameLogin', false);
 				GameAction.setStatus('gameSetup', true);
 				GameAction.setStatus('firstname', 'Guest');
