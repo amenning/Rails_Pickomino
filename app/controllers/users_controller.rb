@@ -1,7 +1,12 @@
 class UsersController < ApplicationController
 
   def create
-    respond_with User.create(user_params), location: nil
+    @user = User.new(user_params)
+    if @user.save
+      respond_with @user, location: nil
+    else
+      respond_with nil, location: nil
+    end
   end
   
   def show
@@ -10,9 +15,13 @@ class UsersController < ApplicationController
   
   def login
     @user = User.where(login_params).last
-    session[:user_id]=@user[:id]
-    session[:firstname]=@user[:firstname]
-    respond_with @user.to_json, location: nil
+    if !@user.nil?
+      session[:user_id]=@user[:id]
+      session[:firstname]=@user[:firstname]
+      respond_with @user.to_json, location: nil
+    else
+      respond_with nil, location: nil
+    end
   end
   
   def logout

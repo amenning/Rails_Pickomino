@@ -7,6 +7,8 @@ angular.module('pickominoGame')
 	'$http',
 	'$scope',
 	function(GameAction, GameState, Registration, $http, $scope){
+		
+		$scope.message = Registration.message;
 				
 		this.newUser = function(){
 			

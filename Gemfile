@@ -16,6 +16,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'angular-rails-templates'
 gem 'responders' 
 gem 'angular_rails_csrf'
+gem 'bcrypt'
 
 ruby "2.2.4"
 

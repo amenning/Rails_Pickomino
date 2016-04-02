@@ -1,4 +1,6 @@
 <div class = "registration inset" ng-controller="RegistrationController as regisCtrl">
+	<!-- SHOW ERROR/SUCCESS MESSAGES --> 
+	<div class="redText" ng-show='message.info'>{{ message.info }}</div>
 		<form ng-submit='regisCtrl.newUser()'>
 			<h3>Welcome to Pickomino!<br>  
 			Please register below.</h3>
