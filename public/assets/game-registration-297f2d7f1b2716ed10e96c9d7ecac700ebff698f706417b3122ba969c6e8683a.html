@@ -1,0 +1,37 @@
+<div class = "registration inset" ng-controller="RegistrationController as regisCtrl">
+	<!-- SHOW ERROR/SUCCESS MESSAGES --> 
+	<div class="redText" ng-show='message.info'>{{ message.info }}</div>
+		<form ng-submit='regisCtrl.newUser()'>
+			<h3>Welcome to Pickomino!<br>  
+			Please register below.</h3>
+			<table style="margin: auto;">
+				<tr>
+					<td>First Name:</td> 
+					<td><input type="text" ng-model="firstname" required/></td>
+				</tr>
+				<tr>
+					<td>Last Name:</td> 
+					<td><input type="text" ng-model="lastname" required/></td>
+				</tr>
+				<tr>
+					<td>Username:</td>
+					<td><input type="text" ng-model="username" required/></td>
+				</tr>
+				<tr>
+					<td>Password:</td>
+					<td><input type="password" ng-model="password" required/></td>
+				</tr>
+				<tr>
+					<td>Confirm Password:</td>
+					<td><input type="password" ng-model="password_check" required/></td>
+				</tr>
+				<tr>
+					<td>Email:</td>
+					<td><input type="text" ng-model="email" required/></td>
+				</tr>
+			</table>
+			<br>
+			<input type="submit" value="Register" class ='btn btn-primary inset' />
+		</form>
+	<div>
+</div>

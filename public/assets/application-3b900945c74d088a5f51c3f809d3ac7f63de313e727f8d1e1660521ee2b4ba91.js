@@ -47320,9 +47320,235 @@ angular.module('pickominoGame', ['ui.router', 'templates'])
 		
 	}
 ]);
+angular.module('pickominoGame')
+
+.controller("ActiveDiceController", ['ActiveDiceArray', 'FreezeDiceAction', function(ActiveDiceArray, FreezeDiceAction){
+	this.diceValues = ActiveDiceArray.array;
+	
+	this.freezeDice = function(diceValue){
+		FreezeDiceAction.freeze(diceValue);
+	};
+}]);
 angular.module('pickominoGame')		
 	
-.controller("ActionController", [
+.controller("GameBodyController", [
+	'GameAction',
+	function(GameAction){
+		this.gameStatus = GameAction.status;
+	}
+]);	
+angular.module('pickominoGame')
+
+.controller("FrozenDiceController", ['FrozenDiceArray', function(FrozenDiceArray){
+	this.diceValues = FrozenDiceArray.array;
+	this.frozenStatus = FrozenDiceArray.frozenStatus;
+}]);
+angular.module('pickominoGame')
+
+.controller("GrillWormsController", ['GrillWormsArray', 'TakeWormAction', function(GrillWormsArray, TakeWormAction){
+	this.grillWormsValues = GrillWormsArray.array;
+	this.deadGrillWormsValues = GrillWormsArray.deadArray;
+	
+	this.takeWorm = function(wormValue){
+		TakeWormAction.take(wormValue);
+	}
+}]);
+angular.module('pickominoGame')
+
+.controller("GameHeaderController", ['GameAction', '$http', function(GameAction, $http){
+	this.name = GameAction.status;
+	
+	this.logout = function(){
+		$http.post('/users/logout.json').success(function(response){
+			location.reload();
+		});
+	};
+}]);
+angular.module('pickominoGame')		
+	
+.controller("LoginController", [
+	'GameAction',
+	'GameState',
+	'$http',
+	'$scope',
+	function(GameAction, GameState, $http, $scope){
+		this.gameStatus = GameAction.status;
+		$scope.message = '';
+		this.formData = {};
+		context = this;
+		
+		this.setUser = function(userID, firstname){
+			if(userID >= 0){
+				GameAction.setStatus('userID', userID);
+				GameAction.setStatus('firstname', firstname);
+				GameAction.setStatus('gameLogin', false);
+				GameAction.setStatus('gameSetup', true);
+			}
+		};
+		
+		this.register = function(){
+			GameAction.setStatus('gameRegistration', true);
+			GameAction.setStatus('gameLogin', false);
+		};
+		
+		this.processForm = function(){
+			 data = { user: {
+			 	username: this.formData.username,
+			 	password_digest: this.formData.password
+			 }};
+			 
+			 $http.post('/users/login.json', data)
+			 .success(function(response){
+			 	if(response !== null){
+			 		context.setUser(response.id, response.firstname);
+			 	}else{
+			 		$scope.message = 'Invalid Username/Password';
+			 	}
+			 });
+		};
+		
+		this.guestLogin = function(){
+			var randomPassword = "Guest" + Math.floor((Math.random() * 99999) + 1) + Date.now();
+			newGuest = {
+				firstname: "Guest",
+				lastname: "",
+				username: "Guest" + Math.floor((Math.random() * 99999) + 1) + Date.now(),
+				password_digest: randomPassword,
+				email: 'guest@guest.com'					
+			};
+			
+			$http.post('/users.json', newGuest)
+			.success(function(response){
+				GameAction.setStatus('gameLogin', false);
+				GameAction.setStatus('gameSetup', true);
+				GameAction.setStatus('firstname', 'Guest');
+				GameAction.setStatus('userID', response.id);
+			});
+		};
+	}
+]);	
+angular.module('pickominoGame')
+
+.controller("PlayerNotificationController", ['PlayerNotification', 'FrozenDiceArray', function(PlayerNotification, FrozenDiceArray){
+	this.frozenStatus = FrozenDiceArray.frozenStatus;
+	this.messageText = PlayerNotification.message;
+}]);	
+angular.module('pickominoGame')
+
+.controller("PlayerOneWormsController", ['GameAction', 'PlayerWormsArray', 'StealWormAction', function(GameAction, PlayerWormsArray, StealWormAction){
+	this.wormValues = PlayerWormsArray.array[0];
+	this.status = PlayerWormsArray.status[0];
+	
+	this.stealWorm = function(wormValue, fromPlayer, index){
+		StealWormAction.steal(wormValue, fromPlayer, index);
+	};
+}]);
+	
+angular.module('pickominoGame')		
+	
+.controller("PlayerOptionsController", [
+	'GameAction',
+	'PlayerNotification',
+	'PlayerNumber',
+	'RollDice',
+	'BunkPenalty',
+	function(GameAction, PlayerNotification, PlayerNumber, RollDice, BunkPenalty){
+		this.gameStatus = GameAction.status;
+		this.messageText = PlayerNotification.message;
+		
+		this.setPlayers = function(playerCount){
+			PlayerNumber.set(playerCount);
+		}; 
+		
+		this.rollDice = function (){
+			RollDice.roll();
+		};
+		
+		this.bunkPenalty = function(){
+			BunkPenalty.penalize();
+		};
+		
+	}
+]);	
+angular.module('pickominoGame')
+
+.controller("PlayerTwoWormsController", ['PlayerWormsArray', 'StealWormAction', function(PlayerWormsArray, StealWormAction){
+	this.wormValues = PlayerWormsArray.array[1];
+	this.status = PlayerWormsArray.status[1];
+	
+	this.stealWorm = function(wormValue, fromPlayer, index){
+		StealWormAction.steal(wormValue, fromPlayer, index);
+	};
+}]);	
+angular.module('pickominoGame')
+
+.controller("PlayerWormsLayoutController", ['GameAction', function(GameAction){
+	this.gameStatus = GameAction.status;
+}]);
+	
+angular.module('pickominoGame')		
+	
+.controller("RegistrationController", [
+	'GameAction',
+	'GameState',
+	'Registration',
+	'$http',
+	'$scope',
+	function(GameAction, GameState, Registration, $http, $scope){
+		
+		$scope.message = Registration.message;
+				
+		this.newUser = function(){
+			if($scope.password === $scope.password_check){
+				data = {
+					firstname: $scope.firstname,
+					lastname: $scope.lastname,
+					username: $scope.username,
+					password_digest: $scope.password,
+					email: $scope.email
+					};
+			
+				//console.log(data);
+				//GameAction.setStatus('userID', userID);
+				Registration.newUser(data);
+			}else{
+				Registration.message.info = 'Passwords do not match';
+			}
+		};
+	}
+]);	
+angular.module('pickominoGame')		
+	
+.controller("SetupController", [
+	'GameAction',
+	'GameState',
+	'$http',
+	function(GameAction, GameState, $http){
+		
+		this.setGame = function(type){
+			switch(type){
+				case "tutorial":
+					GameAction.setStatus('tutorial', true);
+					GameAction.setStatus('gameSetup', false);
+					GameAction.setStatus('playerSetup', true);
+					break;
+				case "continue":
+					GameState.loadGame();
+					break;
+				case "new":
+					GameState.newGame();
+					GameAction.setStatus('roll', true);
+					GameAction.setStatus('gameSetup', false);
+					GameAction.setStatus('playerSetup', true);
+					GameAction.setStatus('gameActive', true);
+					break;
+			};
+		};
+	}
+]);	
+angular.module('pickominoGame')		
+	
+.controller("TutorialController", [
 	'SetDiceImage', 
 	'SetWormImage',
 	'CheckValidDiceFreeze', 
@@ -47348,8 +47574,6 @@ angular.module('pickominoGame')
 			GameAction.setStatus('playerSetup', false);
 			GameAction.setStatus('roll', true);
 			GameAction.setStatus('gameSetup', false);
-			GameState.newGame();
-			GameState.save();
 		};
 		
 		this.rollDice = function (){
@@ -47362,14 +47586,12 @@ angular.module('pickominoGame')
 					GameAction.setStatus('roll', false);
 					GameAction.setStatus('takeWorm', false);
 					GameAction.setStatus('freezeDice', true);
-					GameState.save();
 				}else{
 					PlayerNotification.setMessage('You have bunked!  If possible, you lose your newest worm (leftmost) and the highest grill worm is out of the game.');
 					GameAction.setStatus('roll', false);
 					GameAction.setStatus('takeWorm', false);
 					GameAction.setStatus('freezeDice', false);
 					GameAction.setStatus('bunk', true);
-					GameState.save();
 				}
 			}else if(GameAction.status.gameOver===false){
 				PlayerNotification.setMessage('You have already rolled, please freeze a dice number group.');
@@ -47393,7 +47615,6 @@ angular.module('pickominoGame')
 						GrillWormsArray.highlightWorms(FrozenDiceArray.frozenStatus.sum);
 					}
 					PlayerNotification.setMessage('Please click "roll", or click the worm you would like to take.');
-					GameState.save();
 				}else{
 					PlayerNotification.setMessage('You already froze that number! Please pick a different number.');
 				}
@@ -47414,13 +47635,11 @@ angular.module('pickominoGame')
 						GameAction.setStatus('gameOver', true);
 						GameAction.setStatus('roll', false);
 						PlayerNotification.setMessage('Game Over!');
-						GameState.save();
 					}else{
 						RandomDice.resetDice();
 						GameAction.setStatus('roll', true);
 						GameAction.switchPlayer();
 						PlayerNotification.setMessage('Please roll the dice.');
-						GameState.save();
 					}
 				}else{
 					PlayerNotification.setMessage('You cannot take that worm tile.');
@@ -47442,7 +47661,6 @@ angular.module('pickominoGame')
 					GameAction.setStatus('roll', true);
 					GameAction.switchPlayer();
 					PlayerNotification.setMessage('Please roll the dice.');
-					GameState.save();
 				}else{
 					PlayerNotification.setMessage('You cannot take that worm tile.');
 				}
@@ -47465,153 +47683,6 @@ angular.module('pickominoGame')
 			GameAction.setStatus('bunk', false);
 			GameAction.switchPlayer();
 			PlayerNotification.setMessage('You can now reroll the dice.');
-			GameState.save();
-		};
-	}
-]);	
-angular.module('pickominoGame')
-
-.controller("ActiveDiceController", ['ActiveDiceArray', function(ActiveDiceArray){
-	this.diceValues = ActiveDiceArray.array;
-}]);
-angular.module('pickominoGame')
-
-.controller("FrozenDiceController", ['FrozenDiceArray', function(FrozenDiceArray){
-	this.diceValues = FrozenDiceArray.array;
-}]);
-angular.module('pickominoGame')
-
-.controller("GrillWormsController", ['GrillWormsArray', function(GrillWormsArray){
-	this.grillWormsValues = GrillWormsArray.array;
-	this.deadGrillWormsValues = GrillWormsArray.deadArray;
-}]);
-angular.module('pickominoGame')
-
-.controller("GameHeaderController", ['GameAction', function(GameAction){
-	this.name = GameAction.status;
-}]);
-angular.module('pickominoGame')		
-	
-.controller("LoginController", [
-	'GameAction',
-	'GameState',
-	'$http',
-	'$scope',
-	function(GameAction, GameState, $http, $scope){
-		this.gameStatus = GameAction.status;
-		$scope.message = '';
-		//$scope.name = '';
-		//var context = this;
-		this.formData = {};
-		
-		this.setUser = function(userID, firstname){
-			if(userID >= 0){
-				GameAction.setStatus('userID', userID);
-				GameAction.setStatus('firstname', firstname);
-				GameAction.setStatus('gameLogin', false);
-			}
-		};
-		
-		this.register = function(){
-			GameAction.setStatus('gameRegistration', true);
-			GameAction.setStatus('gameLogin', false);
-		};
-		
-		this.processForm = function(){
-			 $http({
-  				method  : 'POST',
-  				url     : 'app/assets/php/loginform.inc.php',
-  				data    : $.param(this.formData),  // pass in data as strings
-  				headers : { 'Content-Type': 'application/x-www-form-urlencoded' }  // set the headers so angular passing info as form data (not request payload)
- 			})
-  			.success(function(data) {
-				if(data.success===true){
-					GameAction.setStatus('userID', data.userID);
-					GameAction.setStatus('gameLogin', false);
-					//$scope.name = data.firstname;
-					GameAction.setStatus('firstname', data.firstname);
-					console.log(GameAction.status.firstname);
-					console.log(GameAction.status.userID);
-					
-				}else{
-					$scope.message = data.errors.message;
-				}
-  			});
-		};
-		
-		this.guestLogin = function(){
-			var randomPassword = "Guest" + Math.floor((Math.random() * 99999) + 1);
-			newGuest = {
-				'firstname': "Guest",
-				'lastname': "",
-				'username': "Guest" + Math.floor((Math.random() * 99999) + 1),
-				'password': randomPassword,
-				'password_check': randomPassword,
-				'email': 'guest@guest.com'					
-			};
-							
-			$http.post("app/assets/php/guest_registration.php", newGuest)
-			.success(function(data){
-				GameAction.setStatus('gameLogin', false);
-				GameAction.setStatus('firstname', data.firstname);
-				GameAction.setStatus('userID', data.user_id);
-			});
-		};
-	}
-]);	
-angular.module('pickominoGame')
-
-.controller("PlayerNotificationController", ['PlayerNotification', 'FrozenDiceArray', function(PlayerNotification, FrozenDiceArray){
-	this.frozenStatus = FrozenDiceArray.frozenStatus;
-	this.messageText = PlayerNotification.message;
-}]);	
-angular.module('pickominoGame')
-
-.controller("PlayerOneWormsController", ['PlayerWormsArray', function(PlayerWormsArray){
-	this.wormValues = PlayerWormsArray.array[0];
-	this.status = PlayerWormsArray.status[0];
-}]);
-	
-angular.module('pickominoGame')
-
-.controller("PlayerTwoWormsController", ['PlayerWormsArray', function(PlayerWormsArray){
-	this.wormValues = PlayerWormsArray.array[1];
-	this.status = PlayerWormsArray.status[1];
-}]);	
-angular.module('pickominoGame')		
-	
-.controller("RegistrationController", [
-	'GameAction',
-	'GameState',
-	'$http',
-	function(GameAction, GameState, $http){
-		this.gameStatus = GameAction.status;
-		
-		this.setUser = function(userID){
-			GameAction.setStatus('userID', userID);
-			GameAction.setStatus('gameRegistration', false);
-		};
-	}
-]);	
-angular.module('pickominoGame')		
-	
-.controller("SetupController", [
-	'GameAction',
-	'GameState',
-	'$http',
-	function(GameAction, GameState, $http){
-		
-		this.setGame = function(type){
-			switch(type){
-				case "continue":
-					GameState.loadGame();
-					break;
-				case "new":
-					GameState.newGame();
-					GameAction.setStatus('roll', true);
-					GameAction.setStatus('gameSetup', false);
-					break;
-			};
 		};
 	}
 ]);	
@@ -47676,7 +47747,7 @@ angular.module('pickominoGame')
 .directive("gameHeader", function() {
 	return {
 		restrict: 'E',
-		templateUrl: 'game-header.html'
+		templateUrl: "game-header.html"
 	};
 });
 angular.module('pickominoGame')
@@ -47717,6 +47788,30 @@ angular.module('pickominoGame')
 	return {
 		restrict: 'E',
 		templateUrl: "game-setup.html"
+	};
+});	
+angular.module('pickominoGame')
+
+.directive('tooltip', function(){
+	 return { 
+	 	restrict: 'A', 
+	 	link: function(scope, element, attrs){ 
+	 		$(element).hover(function(){ 
+	 			//on mouseenter 
+	 			$(element).tooltip('show'); 
+	 			}, function(){ 
+	 			//on mouseleave 
+	 			$(element).tooltip('hide'); 
+	 		});
+	 	} 
+	 }; 
+});
+angular.module('pickominoGame')
+
+.directive("tutorialBoard", function() {
+	return {
+		restrict: 'E',
+		templateUrl: "tutorial-board.html"
 	};
 });	
 angular.module('pickominoGame')				
@@ -47780,6 +47875,37 @@ angular.module('pickominoGame')
 		};
 	}
 ]);
+angular.module('pickominoGame')
+
+.factory("BunkPenalty", [
+	'PlayerWormsArray',
+	'GameAction',
+	'GrillWormsArray',
+	'RandomDice',
+	'PlayerNotification',
+	'GameState',
+	function BunkPenaltyFactory(PlayerWormsArray, GameAction, GrillWormsArray, RandomDice, PlayerNotification, GameState){
+		return {
+			penalize: function(){
+				if(PlayerWormsArray.array[GameAction.status.activePlayer].length!==0){
+					//return worm to grill
+					wormValue = PlayerWormsArray.removeBunkWorm();
+					//remove highest value worm from grill
+					GrillWormsArray.addWorm(wormValue);
+					GrillWormsArray.removeBunkWorm(wormValue);
+				}
+				//reset dice and start over
+				RandomDice.resetDice();
+				GameAction.setStatus('roll', true);
+				GameAction.setStatus('takeWorm', false);
+				GameAction.setStatus('freezeDice', false);
+				GameAction.setStatus('bunk', false);
+				GameAction.switchPlayer();
+				PlayerNotification.setMessage('You can now reroll the dice.');
+				GameState.save();
+			}
+		};
+}]);
 angular.module('pickominoGame')				
 
 .factory("CheckValidDiceFreeze", [
@@ -47824,6 +47950,47 @@ angular.module('pickominoGame')
 		};
 	}
 ]);
+angular.module('pickominoGame')			
+		
+.factory("FreezeDiceAction", [
+    'GameAction',
+    'CheckValidDiceFreeze',
+    'ActiveDiceArray',
+    'SetDiceImage',
+    'ActiveDiceFilter',
+    'FrozenDiceArray',
+    'GrillWormsArray',
+    'PlayerNotification',
+    'GameState',
+    function FreezeDiceActionFactory(GameAction, CheckValidDiceFreeze, ActiveDiceArray, SetDiceImage, ActiveDiceFilter, FrozenDiceArray, GrillWormsArray, PlayerNotification, GameState){
+		return {
+			freeze: function(diceValue){
+				if(GameAction.status.freezeDice===true){
+					if(CheckValidDiceFreeze.validate(diceValue)){
+						ActiveDiceArray.removeHighlight();
+						diceImage = SetDiceImage.imagify(diceValue);
+						count = ActiveDiceFilter.count(diceValue);
+						for(var x=0; x<count; x++){
+							FrozenDiceArray.add({value: diceValue, image: diceImage});	
+						}
+						ActiveDiceArray.remove(diceValue);
+						GameAction.setStatus('roll', true);
+						GameAction.setStatus('takeWorm', true);
+						GameAction.setStatus('freezeDice', false);
+						if(FrozenDiceArray.frozenStatus.haveWorm){
+							GrillWormsArray.highlightWorms(FrozenDiceArray.frozenStatus.sum);
+						}
+						PlayerNotification.setMessage('Please click "roll", or click the worm you would like to take.');
+						GameState.save();
+					}else{
+						PlayerNotification.setMessage('You already froze that number! Please pick a different number.');
+					}
+				}else if(GameAction.status.gameOver===false){
+					PlayerNotification.setMessage('You need to take a worm or reroll the dice.');
+				}
+			}
+		};
+}]);
 angular.module('pickominoGame')				
 
 .factory("FrozenDiceArray", [function FrozenDiceFactory(){
@@ -47878,20 +48045,22 @@ angular.module('pickominoGame')
 	function GameActionFactory(FrozenDiceArray, ActiveDiceArray, GrillWormsArray, CheckValidDiceFreeze, CheckValidWormTake){
 	
 		var gameActionStatus = {
-			gameLogin: false,
+			gameLogin: true,
 			gameRegistration: false,
+			gameSetup: false,
+			gameActive: false,
+			tutorial: false,
+			playerSetup: false,
 			userID: null,
 			firstname: null,
-			gameSetup: true,
-			playerSetup: true,
+			numPlayers: 1,
+			activePlayer: 0,
+			nonActivePlayer: 1,
 			roll: false,
 			freezeDice: false,
 			takeWorm: false,
 			bunk: false,
-			gameOver: false,
-			numPlayers: 1,
-			activePlayer: 0,
-			nonActivePlayer: 1
+			gameOver: false
 		};
 		
 		return {
@@ -47939,6 +48108,99 @@ angular.module('pickominoGame')
 							break;
 					}
 				}
+			}
+		};
+}]);		
+angular.module('pickominoGame')				
+
+.factory("GameState", [
+	'FrozenDiceArray', 
+	'ActiveDiceArray', 
+	'GrillWormsArray',
+	'GameAction',
+	'PlayerNotification',
+	'PlayerWormsArray',
+	'$http',
+	function GameStateFactory(FrozenDiceArray, ActiveDiceArray, GrillWormsArray, GameAction, PlayerNotification, PlayerWormsArray, $http){
+	
+		var gameStateID = null;
+		
+		var gameState = { 
+							gameID: null,
+							gameStatus: GameAction.status,
+							grillWorms: GrillWormsArray.array,
+							deadGrillWorms: GrillWormsArray.deadArray,
+							playerMessage: PlayerNotification.message,
+						    activeDice: ActiveDiceArray.array,
+						    frozenDice: FrozenDiceArray.array,
+						    frozenDiceTotal: FrozenDiceArray.frozenStatus,
+						    playerWorms: PlayerWormsArray.array,
+						    playerWormsTotals: PlayerWormsArray.status
+		   				};
+		
+		return {	
+			newGame: function(){
+				userID = GameAction.status.userID;
+				data = {
+					game: {player_1_id: GameAction.status.userID}
+				};
+				
+				return $http.post('/users/' + userID + '/games.json', data).success(function(response){
+					gameState.gameID = response.id;
+				});
+			},
+			
+			save: function(){				
+				userID = GameAction.status.userID;
+				gameID = gameState.gameID;
+				gameStateStringified = {};
+				
+				for (var key in gameState) {
+    				gameStateStringified[key] = JSON.stringify(gameState[key]);
+				}
+				data = {
+					game_state: gameStateStringified
+				};
+				
+				return $http.post('/users/' + userID + '/games/' + gameID + '/game_states.json', data).success(function(response){
+					gameStateID = response.id;
+				});
+			},
+			
+			loadGame: function(){
+				userID = GameAction.status.userID;
+				data = {
+					user: {player_1_id: userID}
+				};
+				
+				return $http.post('/users/continue_game.json', data).success(function(response){
+					for (var key in response) {
+    					if (key !== 'created_at' && key !== "updated_at"){
+	    					try{
+	    						response[key] = JSON.parse(response[key]);
+	    					} catch (error) {
+	 						   // Handle the error
+	    						console.log(error.message);
+							}
+						}
+					}	
+					if(response !== null){
+						gameStateID = response.id;
+						gameState.gameID = response.gameID;
+						GameAction.loadState(response.gameStatus);
+						GrillWormsArray.loadGrillWormsState(response.grillWorms);
+						GrillWormsArray.loadDeadGrillWormsState(response.deadGrillWorms);
+						PlayerNotification.setMessage(response.playerMessage.info);
+						ActiveDiceArray.loadState(response.activeDice);
+						FrozenDiceArray.loadState(response.frozenDice);
+						PlayerWormsArray.loadStatusState(response.playerWormsTotals);
+						PlayerWormsArray.loadWormsState(response.playerWorms);
+					}	
+				});
+			},
+			
+			clear: function(){
+				
 			}
 		};
 }]);		
@@ -48180,94 +48442,68 @@ angular.module('pickominoGame')
 		};
 	}
 ]);	
-angular.module('pickominoGame')				
+angular.module('pickominoGame')
 
-.factory("GameState", [
-	'FrozenDiceArray', 
-	'ActiveDiceArray', 
-	'GrillWormsArray',
+.factory('Registration', [
 	'GameAction',
-	'PlayerNotification',
-	'PlayerWormsArray',
 	'$http',
-	function SaveGameStateFactory(FrozenDiceArray, ActiveDiceArray, GrillWormsArray, GameAction, PlayerNotification, PlayerWormsArray, $http){
-	
-		var gameState = { 
-							gameID: null,
-							gameStateID: null,
-							gameStatus: GameAction.status,
-							grillWorms: GrillWormsArray.array,
-							deadGrillWorms: GrillWormsArray.deadArray,
-							playerMessage: PlayerNotification.message,
-						    activeDice: ActiveDiceArray.array,
-						    frozenDice: FrozenDiceArray.array,
-						    frozenDiceTotal: FrozenDiceArray.frozenStatus,
-						    playerWorms: PlayerWormsArray.array,
-						    playerWormsTotals: PlayerWormsArray.status
-		   				};
+	function RegistrationFactory(GameAction, $http){
+		message = {info: ''};
 		
 		return {
-			newGame: function(){
-				data = {userID: gameState.gameStatus.userID};
-				
-				/* 
-				return $http.post("app/assets/php/new_game.php", data)
-					.success(function(data){
-						gameState.gameID = data;
-					});
-				*/
-			},
+			message: message,
 			
-			save: function(){				
-				/*
-				return $http.post("app/assets/php/game_state.php", gameState)
-					.success(function(data){
-						gameState.gameStateID = data;
-					});
-				*/
-			},
-			
-			loadGame: function(){
-				data = {userID: gameState.gameStatus.userID};
-				gameStateScope = this;
-				
-				/*
-				return $http.post("app/assets/php/load_game.php", data)
-					.success(function(data){
-						if(data!=false){
-							gameState.gameID=data;
-							gameStateScope.loadGameState();
-						}
-					});
-				*/
-			},
-			
-			loadGameState: function(){
-				data = {gameID: gameState.gameID};
-				
-				/*
-				return $http.post("app/assets/php/load_game_state.php", data)
-					.success(function(data){
-						if(data!=false){
-							gameState.gameStateID = data.gameStateID;
-							GameAction.loadState(data.gameStatus);
-							GrillWormsArray.loadGrillWormsState(data.grillWorms);
-							GrillWormsArray.loadDeadGrillWormsState(data.deadGrillWorms);
-							PlayerNotification.setMessage(data.playerMessage.info);
-							ActiveDiceArray.loadState(data.activeDice);
-							FrozenDiceArray.loadState(data.frozenDice);
-							PlayerWormsArray.loadStatusState(data.playerWormsTotals);
-							PlayerWormsArray.loadWormsState(data.playerWorms);					
-						}
-					});
-				*/
-			},
-			
-			clear: function(){
-				
+			newUser: function(user){
+				//console.log(user);
+				return $http.post('/users.json', user).success(function(response){
+					if(response !== null){
+						GameAction.status.userID = response.id;
+						GameAction.status.firstname = response.firstname;
+						GameAction.setStatus('gameRegistration', false);
+						GameAction.setStatus('gameSetup', true);
+					}else{
+						message.info = 'Username not available';
+					}
+				});
 			}
 		};
-}]);		
+
+}]);
+angular.module('pickominoGame')
+
+.factory("RollDice",[ 
+		'GameAction',
+		'RandomDice',
+		'GrillWormsArray',
+		'PlayerNotification',
+		'GameState',
+		function RollDiceFactcory(GameAction, RandomDice, GrillWormsArray, PlayerNotification, GameState){
+			return {
+				roll: function (){
+					if(GameAction.status.roll===true){
+						GrillWormsArray.removeWormHighlight();
+						RandomDice.roll();
+						GameAction.checkMoveAvailable();				
+						if(!GameAction.status.bunk){
+							PlayerNotification.setMessage('Please click a dice with the number you would like to freeze.');
+							GameAction.setStatus('roll', false);
+							GameAction.setStatus('takeWorm', false);
+							GameAction.setStatus('freezeDice', true);
+							GameState.save();
+						}else{
+							PlayerNotification.setMessage('You have bunked!  If possible, you lose your newest worm (leftmost) and the highest grill worm is out of the game.');
+							GameAction.setStatus('roll', false);
+							GameAction.setStatus('takeWorm', false);
+							GameAction.setStatus('freezeDice', false);
+							GameAction.setStatus('bunk', true);
+							GameState.save();
+						}
+					}else if(GameAction.status.gameOver===false){
+						PlayerNotification.setMessage('You have already rolled, please freeze a dice number group.');
+					}
+				}
+			};
+}]);
 angular.module('pickominoGame')			
 		
 .factory("SetDiceImage", function SetDiceImageFactory(){
@@ -48296,6 +48532,23 @@ angular.module('pickominoGame')
 		}
 	};
 });
+angular.module('pickominoGame')			
+		
+.factory("PlayerNumber", [
+    'GameAction',
+    'GameState',
+    function PlayerNumberFactory(GameAction, GameState){
+	return {
+		set: function(numPlayers){
+			GameAction.setStatus('numPlayers', numPlayers);
+			GameAction.setStatus('playerSetup', false);
+			GameAction.setStatus('roll', true);
+			GameAction.setStatus('gameSetup', false);
+			GameState.newGame();
+			GameState.save();
+		}
+	};
+}]);
 angular.module('pickominoGame')			
 
 .factory("SetWormImage", function SetDiceImageFactory(){
@@ -48330,11 +48583,84 @@ angular.module('pickominoGame')
 		}
 	};
 });	
+angular.module('pickominoGame')			
+		
+.factory("StealWormAction", [
+    'GameAction',
+    'CheckValidWormSteal',
+    'GrillWormsArray',
+    'PlayerWormsArray',
+    'PlayerNotification',
+    'RandomDice',
+    'GameState',
+    function StealWormActionFactory(GameAction, CheckValidWormSteal, GrillWormsArray, PlayerWormsArray, PlayerNotification, RandomDice, GameState){
+		return {
+			steal: function(wormValue, fromPlayer, index){				
+				if(GameAction.status.takeWorm===true && fromPlayer!==GameAction.status.activePlayer){
+					if(CheckValidWormSteal.validate(wormValue)  && index===0){
+						PlayerWormsArray.removeStolenWorm(wormValue);
+						PlayerWormsArray.addWorm(wormValue);
+						GrillWormsArray.removeWormHighlight();
+						GameAction.setStatus('takeWorm', false);
+						GameAction.setStatus('freezeDice', false);
+						RandomDice.resetDice();
+						GameAction.setStatus('roll', true);
+						GameAction.switchPlayer();
+						PlayerNotification.setMessage('Please roll the dice.');
+						GameState.save();
+					}else{
+						PlayerNotification.setMessage('You cannot take that worm tile.');
+					}
+				}
+			}
+		};
+}]);
+angular.module('pickominoGame')			
+		
+.factory("TakeWormAction", [
+    'GameAction',
+    'CheckValidWormTake',
+    'GrillWormsArray',
+    'PlayerWormsArray',
+    'PlayerNotification',
+    'RandomDice',
+    'GameState',
+    function TakeWormActionFactory(GameAction, CheckValidWormTake, GrillWormsArray, PlayerWormsArray, PlayerNotification, RandomDice, GameState){
+		return {
+			take: function(wormValue){				
+				if(GameAction.status.takeWorm===true){
+					if(CheckValidWormTake.validate(wormValue)){
+						GrillWormsArray.removeWorm(wormValue);
+						PlayerWormsArray.addWorm(wormValue);
+						GrillWormsArray.removeWormHighlight();
+						GameAction.setStatus('takeWorm', false);
+						GameAction.setStatus('freezeDice', false);
+						if(GrillWormsArray.array.length === 0){
+							GameAction.setStatus('gameOver', true);
+							GameAction.setStatus('roll', false);
+							PlayerNotification.setMessage('Game Over!');
+							GameState.save();
+						}else{
+							RandomDice.resetDice();
+							GameAction.setStatus('roll', true);
+							GameAction.switchPlayer();
+							PlayerNotification.setMessage('Please roll the dice.');
+							GameState.save();
+						}
+					}else{
+						PlayerNotification.setMessage('You cannot take that worm tile.');
+					}
+				}else if(GameAction.status.roll===true){
+					PlayerNotification.setMessage('You need to reroll the dice.');
+				}
+			}
+		};
+}]);
 // Angular Rails Template
 // source: app/assets/templates/common-footer.html
 
 angular.module("templates").run(["$templateCache", function($templateCache) {
-  $templateCache.put("common-footer.html", "<div class='footer'>\n	<div class='container'>\n		<div class='row'>\n			<div class='col-lg-4 col-md-4 col-sm-4 col-xs-4'>\n				<h4>Who I Am</h4>\n				<p><i>C. Andrew Menning</i><a href='tickets.html'></p>\n				<p><a href='menning.html'>More About Me <i class='glyphicon glyphicon-arrow-right'></i></a></p>\n			</div>\n\n			<div class='col-lg-4 col-md-4 col-sm-4 col-xs-4'>\n				<h4>Links</h4>\n				<ul class='list-unstyled'>\n					<li><a href='menning.html'>Home</a></li>\n					<li><a href='pickomino.php'>AngularJS Example</a></li>\n					<li><a href='http://catalysisclubphilly.org/' target=\"_blank\">Webmaster Example</a></li>\n					<li><a href=\"random_quotes.html\">Random Quotes Generator</a></li>\n					<li><a href=\"pomodoro_timer.html\">Pomodoro Timer</a></li>\n				</ul>\n			</div>\n\n			<div class='col-lg-4 col-md-4 col-sm-4 col-xs-4'>\n				<h4>Contact Me</h4>\n				<ul class='list-unstyled'>\n					<li><i class='glyphicon glyphicon-globe'></i> Philadelphia, PA</li>\n					<li><i class=\"fa fa-github\"></i> <a href='https://github.com/metakata' target='_blank'>GitHub</a></li>\n					<li><i class=\"fa fa-linkedin\"></i> <a href='https://www.linkedin.com/pub/carl-andrew-menning/3a/417/74a' target='_blank'>LinkedIn</a></li>\n					<li><i class='glyphicon glyphicon-envelope'></i> <a href='mailto:menning23@gmail.com'>Email</a></li>\n				</ul>\n				<p>AngularDice &copy;2016.</p>\n			</div>\n		</div>\n	</div>\n</div>")
+  $templateCache.put("common-footer.html", "<div class='footer'>\n	<div class='container'>\n		<div class='row'>\n			<div class='col-lg-4 col-md-4 col-sm-4 col-xs-4'>\n				<h4>Who I Am</h4>\n				<p><i>C. Andrew Menning</i><a href='#'></p>\n				<p><a href='http://metakata.altervista.org/AngularPickomino/menning.html' target='_blank'>More About Me <i class='glyphicon glyphicon-arrow-right'></i></a></p>\n			</div>\n\n			<div class='col-lg-4 col-md-4 col-sm-4 col-xs-4'>\n				<h4>Links</h4>\n				<ul class='list-unstyled'>\n					<li><a href='http://metakata.altervista.org/AngularPickomino/menning.html' target='_blank'>Home</a></li>\n					<li><a href='http://metakata.altervista.org/AngularPickomino/pickomino.php' target='_blank'>AngularJS Example</a></li>\n					<li><a href='http://catalysisclubphilly.org/' target=\"_blank\">Webmaster Example</a></li>\n					<li><a href=\"http://metakata.altervista.org/AngularPickomino/random_quotes.html\" target='_blank'>Random Quotes Generator</a></li>\n					<li><a href=\"http://metakata.altervista.org/AngularPickomino/pomodoro_timer.html\" target='_blank'>Pomodoro Timer</a></li>\n				</ul>\n			</div>\n\n			<div class='col-lg-4 col-md-4 col-sm-4 col-xs-4'>\n				<h4>Contact Me</h4>\n				<ul class='list-unstyled'>\n					<li><i class='glyphicon glyphicon-globe'></i> Philadelphia, PA</li>\n					<li><i class=\"fa fa-github\"></i> <a href='https://github.com/metakata' target='_blank'>GitHub</a></li>\n					<li><i class=\"fa fa-linkedin\"></i> <a href='https://www.linkedin.com/pub/carl-andrew-menning/3a/417/74a' target='_blank'>LinkedIn</a></li>\n					<li><i class='glyphicon glyphicon-envelope'></i> <a href='mailto:menning23@gmail.com'>Email</a></li>\n				</ul>\n				<p>AngularDice &copy;2016.</p>\n			</div>\n		</div>\n	</div>\n</div>")
 }]);
 
 // Angular Rails Template
@@ -48348,77 +48674,84 @@ angular.module("templates").run(["$templateCache", function($templateCache) {
 // source: app/assets/templates/game-active-dice.html
 
 angular.module("templates").run(["$templateCache", function($templateCache) {
-  $templateCache.put("game-active-dice.html", "<div ng-controller=\"ActiveDiceController as activeDice\">				\n	<div class = 'titles-box'>\n		<span class = 'titles'>Active Dice</span>\n	</div>\n	<div class = 'activedice inset'>\n		<div class = 'dice inset' ng-repeat=\"dice in activeDice.diceValues track by $index\" ng-click=\"action.freezeDice(dice.value)\" ng-class=\"(dice.canFreeze) ? 'activeHighlight' : 'inactiveHighlight' \">\n			<img ng-src=\"{{dice.image}}\" />\n		</div>\n	</div>\n</div>")
+  $templateCache.put("game-active-dice.html", "<div ng-controller=\"ActiveDiceController as activeDice\">				\n	<div class = 'titles-box'>\n		<span class = 'titles'>Active Dice</span>\n	</div>\n	<div class = 'activedice inset'>\n		<div class = 'dice inset' ng-repeat=\"dice in activeDice.diceValues track by $index\" ng-click=\"activeDice.freezeDice(dice.value)\" ng-class=\"(dice.canFreeze) ? 'activeHighlight' : 'inactiveHighlight' \">\n			<img ng-src=\"{{dice.image}}\" />\n		</div>\n	</div>\n</div>")
 }]);
 
 // Angular Rails Template
 // source: app/assets/templates/game-board.html
 
 angular.module("templates").run(["$templateCache", function($templateCache) {
-  $templateCache.put("game-board.html", '<div ng-controller="ActionController as action">\n	<div ng-controller="PlayerNotificationController as notice">\n		\n		<game-grill-worms></game-grill-worms>\n		\n		<br/>\n\n		<game-player-options></game-player-options>\n\n		<br/>\n\n		<game-active-dice></game-active-dice>\n\n		<br/>\n\n		<game-frozen-dice></game-frozen-dice>\n\n		<br/>\n		\n		<game-player-worms></game-player-worms>\n		\n	</div>\n</div>')
+  $templateCache.put("game-board.html", "<game-grill-worms></game-grill-worms>\n\n<br/>\n\n<game-player-options></game-player-options>\n\n<br/>\n\n<game-active-dice></game-active-dice>\n\n<br/>\n\n<game-frozen-dice></game-frozen-dice>\n\n<br/>\n\n<game-player-worms></game-player-worms>")
 }]);
 
 // Angular Rails Template
 // source: app/assets/templates/game-body.html
 
 angular.module("templates").run(["$templateCache", function($templateCache) {
-  $templateCache.put("game-body.html", '<div ng-controller="ActionController as action" class=\'container-body\'>\n\n	<!-- If not logged in, show login area here -->\n	<game-login ng-show="action.gameStatus.gameLogin"></game-login>\n	<!-- If not logged in, show registration area here -->\n	<game-registration ng-show="action.gameStatus.gameRegistration && !action.gameStatus.gameLogin"></game-registration>\n	<!-- If logged in, show game selection here -->\n	<game-setup ng-show="action.gameStatus.gameSetup && !action.gameStatus.gameLogin && !action.gameStatus.gameRegistration"></game-setup>\n	<!-- If logged in and game selected, show game board here -->\n	<game-board ng-hide="action.gameStatus.gameLogin || action.gameStatus.gameSetup"></game-board>\n\n</div>')
+  $templateCache.put("game-body.html", '<div ng-controller="GameBodyController as bodyCtrl" class=\'container-body\'>\n\n	<!-- If not logged in, show login area here -->\n	<game-login ng-show="bodyCtrl.gameStatus.gameLogin"></game-login>\n	<!-- If not logged in, show registration area here -->\n	<game-registration ng-show="bodyCtrl.gameStatus.gameRegistration"></game-registration>\n	<!-- If logged in, show game selection here -->\n	<game-setup ng-show="bodyCtrl.gameStatus.gameSetup"></game-setup>\n	<!-- If logged in and game selected, show game board here -->\n	<game-board ng-show="bodyCtrl.gameStatus.gameActive"></game-board>\n	<!-- If logged in and toturial selected, show tutorial board here -->\n	<tutorial-board ng-show="bodyCtrl.gameStatus.tutorial"></tutorial-board>\n\n</div>')
 }]);
 
 // Angular Rails Template
 // source: app/assets/templates/game-frozen-dice.html
 
 angular.module("templates").run(["$templateCache", function($templateCache) {
-  $templateCache.put("game-frozen-dice.html", "<div ng-controller=\"FrozenDiceController as frozenDice\">\n	<div class = 'titles-box'>\n		<span class = 'titles'>Frozen Dice (Sum: {{notice.frozenStatus.sum}})</span>\n	</div>					\n	<div class = 'frozendice inset'>\n		<div class = 'dice inset frozenHighlight' ng-repeat=\"dice in frozenDice.diceValues | orderBy:'value' track by $index \">\n			<img ng-src=\"{{dice.image}}\" />\n		</div>\n	</div>\n</div>")
+  $templateCache.put("game-frozen-dice.html", "<div ng-controller=\"FrozenDiceController as frozenDice\">\n	<div class = 'titles-box'>\n		<span class = 'titles'>Frozen Dice (Sum: {{frozenDice.frozenStatus.sum}})</span>\n	</div>					\n	<div class = 'frozendice inset'>\n		<div class = 'dice inset frozenHighlight' ng-repeat=\"dice in frozenDice.diceValues | orderBy:'value' track by $index \">\n			<img ng-src=\"{{dice.image}}\" />\n		</div>\n	</div>\n</div>")
 }]);
 
 // Angular Rails Template
 // source: app/assets/templates/game-grill-worms.html
 
 angular.module("templates").run(["$templateCache", function($templateCache) {
-  $templateCache.put("game-grill-worms.html", '<div class = \'titles-box\'>\n	<span class = \'titles\'>Worms on the Grill</span>\n</div>	\n<div class = \'worms inset\' ng-controller="GrillWormsController as grillWorms">\n	<div class = \'worm inset\' ng-repeat="worm in grillWorms.grillWormsValues" ng-click="action.takeWorm(worm.value)" ng-class="{ \'activeHighlight\' : worm.canTake }">\n		<p>{{worm.value}}</p>\n		<img class="img-center" ng-src="{{worm.image}}" />\n	</div>\n	<div class = \'worm inset dead\' ng-repeat="deadWorm in grillWorms.deadGrillWormsValues">\n		<p>{{deadWorm.value}}</p>\n		<img class="img-center" ng-src="{{deadWorm.image}}" />\n		<span class="cross">x</span>\n	</div>\n</div>')
+  $templateCache.put("game-grill-worms.html", '<div class = \'titles-box\'>\n	<span class = \'titles\'>Worms on the Grill</span>\n</div>	\n<div class = \'worms inset\' ng-controller="GrillWormsController as grillWorms">\n	<div class = \'worm inset\' ng-repeat="worm in grillWorms.grillWormsValues" ng-click="grillWorms.takeWorm(worm.value)" ng-class="{ \'activeHighlight\' : worm.canTake }">\n		<p>{{worm.value}}</p>\n		<img class="img-center" ng-src="{{worm.image}}" />\n	</div>\n	<div class = \'worm inset dead\' ng-repeat="deadWorm in grillWorms.deadGrillWormsValues">\n		<p>{{deadWorm.value}}</p>\n		<img class="img-center" ng-src="{{deadWorm.image}}" />\n		<span class="cross">x</span>\n	</div>\n</div>')
 }]);
 
 // Angular Rails Template
 // source: app/assets/templates/game-header.html
 
 angular.module("templates").run(["$templateCache", function($templateCache) {
-  $templateCache.put("game-header.html", "<div class='navbar navbar-default navbar-static-top' ng-controller='GameHeaderController as gameHeaderCtrl'>\n	<div class='container'>\n		<div class='navbar-header'>\n			<a href='pickomino.html' class='navbar-brand'>AngularJS Pickomino Game</a>\n			\n			<button type='button' class='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>\n				<span class='sr-only'>Toggle navigation</span>\n				<span class='icon-bar'></span>\n				<span class='icon-bar'></span>\n				<span class='icon-bar'></span>\n			</button>\n		</div>\n		<ul class='nav navbar-nav navbar-right collapse navbar-collapse'>\n			<li>\n				<a href='goal.html' data-target=\"#\" data-toggle='dropdown'>Goal <span class='caret'></span></a>\n				<ul class='dropdown-menu'>\n					<li>Collect the most worms!</li>\n					<li class='divider'></li>\n					<li>Tiles 21-24 = 1 worm</li>\n					<li class='divider'></li>\n					<li>Tiles 25-28 = 2 worms</li>\n					<li class='divider'></li>\n					<li>Tiles 29-32 = 3 worms</li>\n					<li class='divider'></li>\n					<li>Tiles 33-36 = 4 worms</li>\n				</ul>\n			</li>\n			<li>\n				<a href='turnsummary.html' data-target='#' data-toggle='dropdown'>Turn Summary <span class='caret'></span></a>\n				<ul class='dropdown-menu'>\n					<li>1. Roll Dice</li>\n					<li class='divider'></li>\n					<li>2. Freeze Dice Group</li>\n					<li class='divider'></li>\n					<li>3. Maybe Take Worm</li>\n					<li class='divider'></li>\n					<li>4. Repeat</li>\n				</ul>\n			</li>\n			<li><a href='rules.html' target=\"_blank\">Rules</a></li>\n			<li ng-show='gameHeaderCtrl.name.firstname'><a href=\"app/assets/php/logout.php\">Welcome {{gameHeaderCtrl.name.firstname}}, Log out</a></li>\n		</ul>\n	</div>\n</div>")
+  $templateCache.put("game-header.html", "<div class='navbar navbar-default navbar-static-top' ng-controller='GameHeaderController as gameHeaderCtrl'>\n	<div class='container'>\n		<div class='navbar-header'>\n			<a href='/' class='navbar-brand'>AngularJS Pickomino Game</a>\n			\n			<button type='button' class='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>\n				<span class='sr-only'>Toggle navigation</span>\n				<span class='icon-bar'></span>\n				<span class='icon-bar'></span>\n				<span class='icon-bar'></span>\n			</button>\n		</div>\n		<ul class='nav navbar-nav navbar-right collapse navbar-collapse'>\n			<li>\n				<a href='goal.html' data-target=\"#\" data-toggle='dropdown'>Goal <span class='caret'></span></a>\n				<ul class='dropdown-menu'>\n					<li>Collect the most worms!</li>\n					<li class='divider'></li>\n					<li>Tiles 21-24 = 1 worm</li>\n					<li class='divider'></li>\n					<li>Tiles 25-28 = 2 worms</li>\n					<li class='divider'></li>\n					<li>Tiles 29-32 = 3 worms</li>\n					<li class='divider'></li>\n					<li>Tiles 33-36 = 4 worms</li>\n				</ul>\n			</li>\n			<li>\n				<a href='turnsummary.html' data-target='#' data-toggle='dropdown'>Turn Summary <span class='caret'></span></a>\n				<ul class='dropdown-menu'>\n					<li>1. Roll Dice</li>\n					<li class='divider'></li>\n					<li>2. Freeze Dice Group</li>\n					<li class='divider'></li>\n					<li>3. Maybe Take Worm</li>\n					<li class='divider'></li>\n					<li>4. Repeat</li>\n				</ul>\n			</li>\n			<li><a href='rules.html' target=\"_blank\">Rules</a></li>\n			<li ng-show='gameHeaderCtrl.name.firstname'><a href=\"#\" ng-click=\"gameHeaderCtrl.logout()\">Welcome {{gameHeaderCtrl.name.firstname}}, Log out</a></li>\n		</ul>\n	</div>\n</div>")
 }]);
 
 // Angular Rails Template
 // source: app/assets/templates/game-login.html
 
 angular.module("templates").run(["$templateCache", function($templateCache) {
-  $templateCache.put("game-login.html", '<div class = "login" ng-controller="LoginController as loginCtrl">\n	<!-- SHOW ERROR/SUCCESS MESSAGES --> \n	<div class="redText" ng-show=\'message\'>{{ message }}</div>\n	\n	<form ng-submit="loginCtrl.processForm()">\n		<h1>Welcome to Pickomino!</h1>\n		<br/>\n		Please log in below or <a ng-click="loginCtrl.register()" class = \'btn btn-primary inset\'>Register</a><br/><br/>\n		Username: <input type="text" name="username" ng-model="loginCtrl.formData.username" required><br/><br/> \n		Password: <input type="password" name="password" ng-model="loginCtrl.formData.password" required> <br/><br/>\n		<input type="submit" value="Log in" class =\'btn btn-primary inset loginBtn\' >\n		<br/>\n		<br/>\n		<a ng-click="loginCtrl.guestLogin()" class =\'btn btn-primary inset loginBtn\' >Guest Login</a>\n		<br/>\n	</form>\n</div>')
+  $templateCache.put("game-login.html", '<div class = "login" ng-controller="LoginController as loginCtrl">\n	<!-- SHOW ERROR/SUCCESS MESSAGES --> \n	<div class="redText" ng-show=\'message\'>{{ message }}</div>\n\n	<form ng-submit="loginCtrl.processForm()">\n		<h1>Welcome to Pickomino!</h1>\n		<br/>\n		Please log in below or <a ng-click="loginCtrl.register()" class = \'btn btn-primary inset\'>Register</a><br/><br/>\n		Username: <input type="text" name="username" ng-model="loginCtrl.formData.username" required><br/><br/> \n		Password: <input type="password" name="password" ng-model="loginCtrl.formData.password" required> <br/><br/>\n		<input type="submit" value="Log in" class =\'btn btn-primary inset loginBtn\' >\n		<br/>\n		<br/>\n		<a ng-click="loginCtrl.guestLogin()" class =\'btn btn-primary inset loginBtn\' >Guest Login</a>\n		<br/>\n	</form>\n</div>')
 }]);
 
 // Angular Rails Template
 // source: app/assets/templates/game-player-options.html
 
 angular.module("templates").run(["$templateCache", function($templateCache) {
-  $templateCache.put("game-player-options.html", '<div>\n	<div class = \'titles-box\'>\n		<span class = \'titles\' ng-class="{ \'redText\' : action.gameStatus.bunk }">\n			<span ng-hide="action.gameStatus.numPlayers===1 || action.gameStatus.gameOver">\n				Player {{action.gameStatus.activePlayer+1}}: \n			</span>{{notice.messageText.info}}\n		</span>\n	</div>	\n	<div class = \'playeroptions outset\'>\n		<button class = \'buttons inset activeButtonHighlight\' ng-click="action.setPlayers(1)" ng-show="action.gameStatus.playerSetup">\n			Solo Play\n		</button>\n		<button class = \'buttons inset activeButtonHighlight\' ng-click="action.setPlayers(2)" ng-show="action.gameStatus.playerSetup">\n			Two Players\n		</button>\n		<button class = \'buttons inset\' ng-click="action.rollDice()" ng-class="{ \'activeButtonHighlight\' : action.gameStatus.roll }" ng-hide="action.gameStatus.playerSetup || action.gameStatus.bunk || action.gameStatus.gameOver">\n			Roll\n		</button>\n		<button class = \'buttons inset bunkButtonHighlight\' ng-show="action.gameStatus.bunk" ng-click="action.bunkPenalty()">\n			Clear Bunk\n		</button>\n		<a href="/"><button class = \'buttons inset activeButtonHighlight\' ng-show="action.gameStatus.gameOver">\n			Reset\n		</button></a>\n	</div>\n</div>')
+  $templateCache.put("game-player-options.html", '<div ng-controller="PlayerOptionsController as optionsCtrl">\n	<div class = \'titles-box\'>\n		<span class = \'titles\' ng-class="{ \'redText\' : optionsCtrl.gameStatus.bunk }">\n			<span ng-hide="optionsCtrl.gameStatus.numPlayers===1 || optionsCtrl.gameStatus.gameOver">\n				Player {{optionsCtrl.gameStatus.activePlayer+1}}: \n			</span>{{optionsCtrl.messageText.info}}\n		</span>\n	</div>	\n	<div class = \'playeroptions outset\'>\n		<button class = \'buttons inset activeButtonHighlight\' ng-click="optionsCtrl.setPlayers(1)" ng-show="optionsCtrl.gameStatus.playerSetup">\n			Solo Play\n		</button>\n		<button class = \'buttons inset activeButtonHighlight\' ng-click="optionsCtrl.setPlayers(2)" ng-show="optionsCtrl.gameStatus.playerSetup">\n			Two Players\n		</button>\n		<button class = \'buttons inset\' ng-click="optionsCtrl.rollDice()" ng-class="{ \'activeButtonHighlight\' : optionsCtrl.gameStatus.roll }" ng-hide="optionsCtrl.gameStatus.playerSetup || optionsCtrl.gameStatus.bunk || optionsCtrl.gameStatus.gameOver">\n			Roll\n		</button>\n		<button class = \'buttons inset bunkButtonHighlight\' ng-show="optionsCtrl.gameStatus.bunk" ng-click="optionsCtrl.bunkPenalty()">\n			Clear Bunk\n		</button>\n		<a href="pickomino.php"><button class = \'buttons inset activeButtonHighlight\' ng-show="optionsCtrl.gameStatus.gameOver">\n			Reset\n		</button></a>\n	</div>\n</div>')
 }]);
 
 // Angular Rails Template
 // source: app/assets/templates/game-player-worms.html
 
 angular.module("templates").run(["$templateCache", function($templateCache) {
-  $templateCache.put("game-player-worms.html", "<div ng-class=\"{'row-fluid twoPlayerContainer' : action.gameStatus.numPlayers===2 }\">\n	<div ng-controller=\"PlayerOneWormsController as playerOneWorms\" ng-class=\"{ 'twoPlayerWidth' : action.gameStatus.numPlayers===2 }\">\n		<div class = 'titles-box' ng-class=\"{ 'activePlayerHighlight' : action.gameStatus.numPlayers===2 && action.gameStatus.activePlayer===0 }\">\n			<span class = 'titles' ng-hide=\"action.gameStatus.numPlayers===2\">Player's Worms ( <ng-pluralize count=playerOneWorms.status.total when=\"{'1': '1 Worm', 'other': '{} Worms'}\"></ng-pluralize> )</span>\n			<span class = 'titles' ng-hide=\"action.gameStatus.numPlayers===1\">Player 1's Worms ( <ng-pluralize count=playerOneWorms.status.total when=\"{'1': '1 Worm', 'other': '{} Worms'}\"></ng-pluralize> )</span>\n		</div>					\n		<div class = 'playerWorms inset'>\n			<div class = 'worm inset' ng-repeat=\"playerOneWorm in playerOneWorms.wormValues\" ng-class=\"{ 'activeHighlight' : (notice.frozenStatus.sum===playerOneWorm.value && $index===0 && action.gameStatus.activePlayer!==0) }\" ng-click=\"action.stealWorm(playerOneWorm.value,0,$index)\">\n				<p>{{playerOneWorm.value}}</p>\n				<img ng-src=\"{{playerOneWorm.image}}\" />\n			</div>\n		</div>\n	</div>\n	<br/>\n	<div ng-controller=\"PlayerTwoWormsController as playerTwoWorms\" ng-hide=\"action.gameStatus.numPlayers===1\" class=\"twoPlayerWidth\">\n		<div class = 'titles-box' ng-class=\"{ 'activePlayerHighlight' : action.gameStatus.numPlayers===2 && action.gameStatus.activePlayer===1 }\">\n			<span class = 'titles'>Player 2's Worms ( <ng-pluralize count=playerTwoWorms.status.total when=\"{'1': '1 Worm', 'other': '{} Worms'}\"></ng-pluralize> )</span>\n		</div>					\n		<div class = 'playerWorms inset'>\n			<div class = 'worm inset' ng-repeat=\"playerTwoWorm in playerTwoWorms.wormValues\" ng-class=\"{ 'activeHighlight' : notice.frozenStatus.sum===playerTwoWorm.value && $index===0 && action.gameStatus.activePlayer!==1 }\" ng-click=\"action.stealWorm(playerTwoWorm.value,1,$index)\">\n				<p>{{playerTwoWorm.value}}</p>\n				<img ng-src=\"{{playerTwoWorm.image}}\" />\n			</div>\n		</div>\n	</div>\n</div>")
+  $templateCache.put("game-player-worms.html", "<div ng-controller=\"PlayerWormsLayoutController as layoutCtrl\" ng-class=\"{'row-fluid twoPlayerContainer' : layoutCtrl.gameStatus.numPlayers===2 }\">\n	<div ng-controller=\"PlayerOneWormsController as playerOneWorms\" ng-class=\"{ 'twoPlayerWidth' : layoutCtrl.gameStatus.numPlayers===2 }\">\n		<div class = 'titles-box' ng-class=\"{ 'activePlayerHighlight' : layoutCtrl.gameStatus.numPlayers===2 && layoutCtrl.gameStatus.activePlayer===0 }\">\n			<span class = 'titles' ng-hide=\"layoutCtrl.gameStatus.numPlayers===2\">Player's Worms ( <ng-pluralize count=playerOneWorms.status.total when=\"{'1': '1 Worm', 'other': '{} Worms'}\"></ng-pluralize> )</span>\n			<span class = 'titles' ng-hide=\"layoutCtrl.gameStatus.numPlayers===1\">Player 1's Worms ( <ng-pluralize count=playerOneWorms.status.total when=\"{'1': '1 Worm', 'other': '{} Worms'}\"></ng-pluralize> )</span>\n		</div>					\n		<div class = 'playerWorms inset'>\n			<div class = 'worm inset' ng-repeat=\"playerOneWorm in playerOneWorms.wormValues\" ng-class=\"{ 'activeHighlight' : (notice.frozenStatus.sum===playerOneWorm.value && $index===0 && layoutCtrl.gameStatus.activePlayer!==0) }\" ng-click=\"playerOneWorms.stealWorm(playerOneWorm.value,0,$index)\">\n				<p>{{playerOneWorm.value}}</p>\n				<img ng-src=\"{{playerOneWorm.image}}\" />\n			</div>\n		</div>\n	</div>\n	<br/>\n	<div ng-controller=\"PlayerTwoWormsController as playerTwoWorms\" ng-hide=\"layoutCtrl.gameStatus.numPlayers===1\" class=\"twoPlayerWidth\">\n		<div class = 'titles-box' ng-class=\"{ 'activePlayerHighlight' : layoutCtrl.gameStatus.numPlayers===2 && layoutCtrl.gameStatus.activePlayer===1 }\">\n			<span class = 'titles'>Player 2's Worms ( <ng-pluralize count=playerTwoWorms.status.total when=\"{'1': '1 Worm', 'other': '{} Worms'}\"></ng-pluralize> )</span>\n		</div>					\n		<div class = 'playerWorms inset'>\n			<div class = 'worm inset' ng-repeat=\"playerTwoWorm in playerTwoWorms.wormValues\" ng-class=\"{ 'activeHighlight' : notice.frozenStatus.sum===playerTwoWorm.value && $index===0 && layoutCtrl.gameStatus.activePlayer!==1 }\" ng-click=\"playerTwoWorms.stealWorm(playerTwoWorm.value,1,$index)\">\n				<p>{{playerTwoWorm.value}}</p>\n				<img ng-src=\"{{playerTwoWorm.image}}\" />\n			</div>\n		</div>\n	</div>\n</div>")
 }]);
 
 // Angular Rails Template
 // source: app/assets/templates/game-registration.html
 
 angular.module("templates").run(["$templateCache", function($templateCache) {
-  $templateCache.put("game-registration.html", '<div class = "registration inset">\n		<form action="app/assets/php/registration.php" method="POST">\n			<h3>Welcome to Pickomino!<br>  \n			Please register below.</h3>\n			<table style="margin: auto;">\n				<tr>\n					<td>First Name:</td> \n					<td><input type="text" name="firstname" required/></td>\n				</tr>\n				<tr>\n					<td>Last Name:</td> \n					<td><input type="text" name="lastname" required/></td>\n				</tr>\n				<tr>\n					<td>Username:</td>\n					<td><input type="text" name="username" required/></td>\n				</tr>\n				<tr>\n					<td>Password:</td>\n					<td><input type="password" name="password" required/></td>\n				</tr>\n				<tr>\n					<td>Confirm Password:</td>\n					<td><input type="password" name="password_check" required/></td>\n				</tr>\n				<tr>\n					<td>Email:</td>\n					<td><input type="text" name="email" required/></td>\n				</tr>\n			</table>\n			<br>\n			<input type="submit" value="Register" class =\'btn btn-primary inset\' />\n		</form>\n	<div>\n</div>')
+  $templateCache.put("game-registration.html", '<div class = "registration inset" ng-controller="RegistrationController as regisCtrl">\n	<!-- SHOW ERROR/SUCCESS MESSAGES --> \n	<div class="redText" ng-show=\'message.info\'>{{ message.info }}</div>\n		<form ng-submit=\'regisCtrl.newUser()\'>\n			<h3>Welcome to Pickomino!<br>  \n			Please register below.</h3>\n			<table style="margin: auto;">\n				<tr>\n					<td>First Name:</td> \n					<td><input type="text" ng-model="firstname" required/></td>\n				</tr>\n				<tr>\n					<td>Last Name:</td> \n					<td><input type="text" ng-model="lastname" required/></td>\n				</tr>\n				<tr>\n					<td>Username:</td>\n					<td><input type="text" ng-model="username" required/></td>\n				</tr>\n				<tr>\n					<td>Password:</td>\n					<td><input type="password" ng-model="password" required/></td>\n				</tr>\n				<tr>\n					<td>Confirm Password:</td>\n					<td><input type="password" ng-model="password_check" required/></td>\n				</tr>\n				<tr>\n					<td>Email:</td>\n					<td><input type="text" ng-model="email" required/></td>\n				</tr>\n			</table>\n			<br>\n			<input type="submit" value="Register" class =\'btn btn-primary inset\' />\n		</form>\n	<div>\n</div>')
 }]);
 
 // Angular Rails Template
 // source: app/assets/templates/game-setup.html
 
 angular.module("templates").run(["$templateCache", function($templateCache) {
-  $templateCache.put("game-setup.html", "<div class = \"setup inset\" ng-controller=\"SetupController as setupCtrl\">\n		<button class = 'btn btn-primary inset' ng-click=\"setupCtrl.setGame('new')\">\n			New Game\n		</button>\n		<button class = 'btn btn-primary inset' ng-click=\"setupCtrl.setGame('continue')\">\n			Continue Game\n		</button>\n</div>")
+  $templateCache.put("game-setup.html", "<div class = \"setup inset\" ng-controller=\"SetupController as setupCtrl\">\n		<button class = 'btn btn-primary inset' ng-click=\"setupCtrl.setGame('tutorial')\">\n			Tutorial\n		</button>\n		<button class = 'btn btn-primary inset' ng-click=\"setupCtrl.setGame('new')\">\n			New Game\n		</button>\n		<button class = 'btn btn-primary inset' ng-click=\"setupCtrl.setGame('continue')\">\n			Continue Game\n		</button>\n</div>")
+}]);
+
+// Angular Rails Template
+// source: app/assets/templates/tutorial-board.html
+
+angular.module("templates").run(["$templateCache", function($templateCache) {
+  $templateCache.put("tutorial-board.html", '<div ng-controller="TutorialController as action">\n	<!--div ng-controller="PlayerNotificationController as notice"-->\n		\n		<!--span uib-popover="Hello world!" popover-is-open="true" popover-trigger="none">\n   			Static true popover!\n		</span-->\n		\n		<game-grill-worms></game-grill-worms>\n		\n		<br/>\n\n		<game-player-options></game-player-options>\n\n		<br/>\n\n		<game-active-dice></game-active-dice>\n\n		<br/>\n\n		<game-frozen-dice></game-frozen-dice>\n\n		<br/>\n		\n		<game-player-worms></game-player-worms>\n		\n	<!--/div-->\n</div>')
 }]);
 
 
