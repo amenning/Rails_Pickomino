@@ -4,7 +4,8 @@
 
 	<form ng-submit="loginCtrl.processForm()">
 		<h1>Welcome to Pickomino!</h1>
-		<h3>Implemented using Rails-Angular-PG</h3>
+		<h3>Implemented using Rails-Angular-PostgreSQL</h3>
+		<p><%= image_tag("Ruby_on_Rails-logo.png", class: "logo_img") %> + <%= image_tag("AngularJS-Shield-large.png", class: "logo_img") %> + <%= image_tag("Postgresql-logo.png", class: "logo_img") %></p>
 		<br/>
 		Please log in below or <a ng-click="loginCtrl.register()" class = 'btn btn-primary inset'>Register</a><br/><br/>
 		Username: <input type="text" name="username" ng-model="loginCtrl.formData.username" required><br/><br/> 
