@@ -11,13 +11,12 @@ angular.module('pickominoGame')
 		$scope.message = Registration.message;
 				
 		this.newUser = function(){
-			
 			if($scope.password === $scope.password_check){
 				data = {
 					firstname: $scope.firstname,
 					lastname: $scope.lastname,
 					username: $scope.username,
-					password: $scope.password,
+					password_digest: $scope.password,
 					email: $scope.email
 					};
 			
@@ -25,7 +24,7 @@ angular.module('pickominoGame')
 				//GameAction.setStatus('userID', userID);
 				Registration.newUser(data);
 			}else{
-				console.log('Password do not match');
+				Registration.message.info = 'Passwords do not match';
 			}
 		};
 	}

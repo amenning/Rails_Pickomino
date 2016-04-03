@@ -28,7 +28,7 @@ angular.module('pickominoGame')
 		this.processForm = function(){
 			 data = { user: {
 			 	username: this.formData.username,
-			 	password: this.formData.password
+			 	password_digest: this.formData.password
 			 }};
 			 
 			 $http.post('/users/login.json', data)
@@ -47,7 +47,7 @@ angular.module('pickominoGame')
 				firstname: "Guest",
 				lastname: "",
 				username: "Guest" + Math.floor((Math.random() * 99999) + 1) + Date.now(),
-				password: randomPassword,
+				password_digest: randomPassword,
 				email: 'guest@guest.com'					
 			};
 			

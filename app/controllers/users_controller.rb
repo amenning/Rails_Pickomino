@@ -2,7 +2,12 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    logger.info 'test'
+    logger.info @user.to_json
+    logger.info 'test'
     if @user.save
+      session[:user_id]=@user[:id]
+      session[:firstname]=@user[:firstname]
       respond_with @user, location: nil
     else
       respond_with nil, location: nil
@@ -14,8 +19,8 @@ class UsersController < ApplicationController
   end
   
   def login
-    @user = User.where(login_params).last
-    if !@user.nil?
+    @user = User.where({username: login_params[:username]}).last.try(:authenticate, login_params[:password_digest])
+    if @user
       session[:user_id]=@user[:id]
       session[:firstname]=@user[:firstname]
       respond_with @user.to_json, location: nil
@@ -43,11 +48,11 @@ class UsersController < ApplicationController
   
   private  
   def user_params
-    params.require(:user).permit(:username, :password, :firstname, :lastname, :email)
+    params.require(:user).permit(:username, :password_digest, :firstname, :lastname, :email)
   end
   
   def login_params
-    params.require(:user).permit(:username, :password)
+    params.require(:user).permit(:username, :password_digest)
   end
   
   def continue_params
