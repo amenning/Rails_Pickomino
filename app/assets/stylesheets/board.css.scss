@@ -1,6 +1,6 @@
  img {
-  height: 50px;
-  border-radius: 15px;
+  height: 30px;
+  border-radius: 8px;
  }
  .container-game {
 	background: image-url("BackgroundImage.png") no-repeat center center fixed;
@@ -36,7 +36,7 @@
    border-style: solid;
    border-color: #fff;
    border-width: 0px 2px 2px 2px;
-   min-height: 100px;
+   min-height: 80px;
    padding: 5px;
  }
   .playerWorms{
@@ -48,7 +48,7 @@
    border-style: solid;
    border-color: #fff;
    border-width: 0px 2px 2px 2px;
-   min-height: 100px;
+   min-height: 80px;
    padding: 5px;
  }
  .twoPlayerWidth{
@@ -62,8 +62,8 @@
  .worm{
    flex: 0 0 auto;
    background: white;
-   height: 90px;
-   width: 70px;
+   height: 70px;
+   width: 50px;
    /*margin: 0 auto;*/
    padding: 0px 0px 0px 0px;
    border-color: #215f1e;
@@ -85,7 +85,7 @@
    border-style: solid;
    border-width: 0px 2px 2px 2px;
    border-radius: 0px 0px 6px 6px;
-   min-height: 75px;
+   min-height: 55px;
  }
  .frozendice{
    display: flex;
@@ -96,16 +96,16 @@
    border-style: solid;
    border-width: 0px 2px 2px 2px;
    border-radius: 0px 0px 6px 6px;
-   min-height: 75px;
+   min-height: 55px;
  }
  .dice{
    flex: 0 0 auto;
    background: white;
-   height: 51px;
-   width: 51px;
+   height: 31px;
+   width: 31px;
    margin: 8px;
-   border: 8px solid #215f1e;
-   border-radius: 6px;
+   border: 5px solid #215f1e;
+   border-radius: 0px;
    text-align: center;
  }
  .playeroptions{
@@ -117,7 +117,7 @@
    border-style: solid;
    border-width: 0px 2px 2px 2px;
    border-radius: 0px 0px 6px 6px;
-   min-height: 75px;
+   min-height: 55px;
  }
  .playerNotification{
    text-align: center;
@@ -131,7 +131,7 @@
    text-align: center;
    background-color: #457f86;
    color: #fff;
-   font-size: 24px;
+   font-size: 14px;
    border-radius: 6px;
    border: 2px solid #fff;   
    padding: 20px;   
@@ -218,7 +218,7 @@
    border-color: #fff;
    border-width: 2px 2px 0px 2px;
    color: #fff;
-   font-size: 24px;
+   font-size: 16px;
  }
  
  .outset {
@@ -239,12 +239,17 @@
  
  .activeHighlight{
 	border: 5px solid #78FA89;
-	border-radius: 15px;
+	border-radius: 10px;
  }
+ 
+ .frozenHighlight{
+  border: 5px solid #78FAFE;
+  border-radius: 10px;
+ } 
   
   .inactiveHighlight{
 	border: 5px solid #FFF;
-	border-radius: 15px;
+	border-radius: 10px;
  }
  
  .dead{
@@ -253,17 +258,12 @@
 	position: relative;
  }
  .cross{
-  	left: 0;
+  	left: -2px;
   	position: absolute;
-  	top: -50px;
+  	top: -35px;
   	text-align: center;
-  	font-size: 125px;
+  	font-size: 90px;
   	color: red;
- }
- 
- .frozenHighlight{
-	border: 5px solid #78FAFE;
-	border-radius: 15px;
  }
  
  .redText{
