@@ -18,7 +18,7 @@ gem 'responders'
 gem 'angular_rails_csrf'
 gem 'bcrypt'
 
-ruby "2.2.4"
+ruby "2.3.1"
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

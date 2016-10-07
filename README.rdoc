@@ -1,28 +1,22 @@
-== README
+Pickomino
+======================
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A Rails project 
 
-Things you may want to cover:
+This project is an implementation of Pickomino dice game using Rails and Angular
 
-* Ruby version
+##	Steps to install:
 
-* System dependencies
+```bash
+# Create config/secrets.yml file and add the following items for development
+## secret_key_base
+## secret_token
+# You can use "rake secret" to generate various tokens
 
-* Configuration
+bundle install
+rake db:create
+rake db:migrate RAILS_ENV=development
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+rails server
+# Open your browser to localhost:3000
+```
