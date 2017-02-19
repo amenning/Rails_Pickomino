@@ -8,8 +8,7 @@ script:
   - bundle exec rake db:test:prepare
   - bundle exec rake test test/
 before_script:
+  - export $SECRET_BASE_KEY = bundle exec rake secret 
   - echo "test:" >> config/secrets.yml
-  - echo -n "  secret_key_base: " >> config/secrets.yml
-  - bundle exec rake secret >> config/secrets.yml
-  - echo -n "  secret_token: " >> config/secrets.yml
-  - bundle exec rake secret >> config/secrets.yml
+  - echo '  secret_base_key: testbase' >> config/secrets.yml
+  - echo '  secret_token: testtoken' >> config/secrets.yml
