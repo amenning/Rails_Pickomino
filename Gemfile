@@ -17,6 +17,7 @@ gem 'angular-rails-templates'
 gem 'responders' 
 gem 'angular_rails_csrf'
 gem 'bcrypt', '~> 3.1.7'
+gem 'puma'
 
 ruby "2.3.1"
 
