@@ -2,9 +2,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    logger.info 'test'
-    logger.info @user.to_json
-    logger.info 'test'
+    @user.password = user_params[:password_digest]
     if @user.save
       session[:user_id]=@user[:id]
       session[:firstname]=@user[:firstname]
@@ -19,7 +17,7 @@ class UsersController < ApplicationController
   end
   
   def login
-    @user = User.where({username: login_params[:username]}).last.try(:authenticate, login_params[:password_digest])
+    @user = User.find_by(username: login_params[:username]).authenticate(login_params[:password_digest])
     if @user
       session[:user_id]=@user[:id]
       session[:firstname]=@user[:firstname]
