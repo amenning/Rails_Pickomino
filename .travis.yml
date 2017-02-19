@@ -10,4 +10,3 @@ script:
 before_script:
   - export SECRET_BASE_KEY=$(bundle exec rake secret)
   - export SECRET_TOKEN=$(bundle exec rake secret)
-  - cp config/secrets.yml.dist config/secrets.yml
