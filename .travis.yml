@@ -8,5 +8,5 @@ script:
   - bundle exec rake db:test:prepare
   - bundle exec rake test test/
 before_script:
-  - export SECRET_BASE_KEY=$(bundle exec rake secret)
+  - export SECRET_KEY_BASE=$(bundle exec rake secret)
   - export SECRET_TOKEN=$(bundle exec rake secret)
