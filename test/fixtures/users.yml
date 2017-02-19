@@ -2,14 +2,14 @@
 
 one:
   username: MyString
-  password: MyString
+  password_digest: MyString
   firstname: MyString
   lastname: MyString
   email: MyString
 
 two:
   username: MyString
-  password: MyString
+  password_digest: MyString
   firstname: MyString
   lastname: MyString
   email: MyString
