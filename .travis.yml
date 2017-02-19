@@ -11,5 +11,5 @@ before_script:
   - export SECRET_BASE_KEY=$(bundle exec rake secret)
   - export SECRET_TOKEN=$(bundle exec rake secret) 
   - echo "test:" >> config/secrets.yml
-  - echo '  secret_base_key: <%= ENV["SECRET_BASE_KEY"]' >> config/secrets.yml
-  - echo '  secret_token: <%= ENV["SECRET_TOKEN"]' >> config/secrets.yml
+  - echo "  secret_base_key: <%= ENV['SECRET_BASE_KEY']" >> config/secrets.yml
+  - echo "  secret_token: <%= ENV['SECRET_TOKEN']" >> config/secrets.yml
